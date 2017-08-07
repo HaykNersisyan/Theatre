@@ -5,6 +5,8 @@ import diploma.gyumri.theatre.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**
@@ -14,6 +16,7 @@ import retrofit2.http.POST;
 public interface APIService {
     @GET("")
     Call<EventsDTO> getEvents();
+    @Headers({"Content-type:aplication/json"})
     @POST("http://asdasdhasghd")
     Call<User> register(@Body User user);
 }

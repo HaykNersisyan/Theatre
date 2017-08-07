@@ -1,14 +1,19 @@
 package diploma.gyumri.theatre.view.activities;
 
 import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.conteins.Constants;
@@ -40,6 +45,7 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         unbinder = ButterKnife.bind(this);
+
     }
 
     @Override
@@ -48,8 +54,26 @@ public class RegistrationActivity extends AppCompatActivity {
         unbinder.unbind();
     }
 
+    @OnTouch(R.id.registerBtn)
+    boolean onTouch(Button button, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                button.setTextColor(ResourcesCompat.getColor(getResources(),R.color.buttonColor,null));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
+                return false    ;
+            case MotionEvent.ACTION_UP:
+                ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
+                button.setTextColor(Color.WHITE);
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                return false;
+        }
+        return false;
+    }
+
     @OnClick(R.id.registerBtn)
     void onClick() {
+        Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
+
         if (fieldsValidation()) {
             if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
                 Toast.makeText(this, "parolner@ havasar chen", Toast.LENGTH_SHORT).show();
