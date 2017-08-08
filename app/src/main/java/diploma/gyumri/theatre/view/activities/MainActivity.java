@@ -1,27 +1,26 @@
 package diploma.gyumri.theatre.view.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.view.fragments.ContactUsFragment;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
@@ -85,9 +84,13 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return;
         }
+        if (getSupportFragmentManager().findFragmentByTag("MainFragment") != null &&
+                getSupportFragmentManager().findFragmentByTag("MainFragment").isVisible()) {
+            super.onBackPressed();
+        }
         if (getSupportFragmentManager().findFragmentByTag("map") != null
                 && getSupportFragmentManager().findFragmentByTag("map").isVisible()) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment(getSupportFragmentManager()), null).commit();
+            switchFragment(MainFragment.newInstance(getSupportFragmentManager()), "MainFragment");
             return;
         } else {
             super.onBackPressed();
@@ -122,13 +125,30 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            String uri = "facebook://https://www.facebook.com/gyumritheatre/";
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(intent);
+            if (getSupportFragmentManager().findFragmentByTag("MainFragment") != null &&
+                    getSupportFragmentManager().findFragmentByTag("MainFragment").isVisible()) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+
+                }
+            } else {
+                switchFragment(MainFragment.newInstance(getSupportFragmentManager()), "MainFragment");
+            }
+//            String uri = "fb://gyumritheatre/";
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+//            startActivity(intent);
+
 
         } else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(MainActivity.this, WebActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
+            Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+            String facebookUrl = getFacebookPageURL(this);
+            facebookIntent.setData(Uri.parse(facebookUrl));
+            startActivity(facebookIntent);
 
         } else if (id == R.id.contact_us) {
             getSupportFragmentManager().beginTransaction()
@@ -140,6 +160,33 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+
+    private void switchFragment(Fragment fragment, String tag) {
+        if (fragment instanceof MainFragment) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, fragment, tag).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, fragment, tag).addToBackStack(null).commit();
+        }
+    }
+
+    public static String FACEBOOK_URL = "https://www.facebook.com/gyumritheatre";
+    public static String FACEBOOK_PAGE_ID = "1163153797037461";
+
+    //method to get the right URL to use in the intent
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            Log.i("111", "getFacebookPageURL: 2");
+            return "fb://page/" + FACEBOOK_PAGE_ID;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
     }
 
     @Override
