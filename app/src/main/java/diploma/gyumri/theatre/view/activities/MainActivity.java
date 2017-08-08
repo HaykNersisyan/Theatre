@@ -2,6 +2,7 @@ package diploma.gyumri.theatre.view.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.res.ResourcesCompat;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
+import diploma.gyumri.theatre.view.fragments.ContactUsFragment;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         regBtn = (Button) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.mainRegBtn);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.newInstance(getSupportFragmentManager()), "tag").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.newInstance(getSupportFragmentManager()), "MainFragment").commit();
         regBtn.setOnClickListener(this);
         regBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -81,6 +83,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            return;
+        }
+        if (getSupportFragmentManager().findFragmentByTag("map") != null
+                && getSupportFragmentManager().findFragmentByTag("map").isVisible()) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment(getSupportFragmentManager()), null).commit();
+            return;
         } else {
             super.onBackPressed();
         }
@@ -114,13 +122,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            String uri = "facebook://https://www.facebook.com/gyumritheatre/";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(intent);
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.contact_us) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new ContactUsFragment(), "map")
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -58,9 +58,9 @@ public class RegistrationActivity extends AppCompatActivity {
     boolean onTouch(Button button, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                button.setTextColor(ResourcesCompat.getColor(getResources(),R.color.buttonColor,null));
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
                 button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
-                return false    ;
+                return false;
             case MotionEvent.ACTION_UP:
                 ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
                 button.setTextColor(Color.WHITE);
@@ -72,9 +72,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
     @OnClick(R.id.registerBtn)
     void onClick() {
-        Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
-
         if (fieldsValidation()) {
+            if (!validePhone(phone.toString().trim())) {
+                Toast.makeText(this, "asdasdasd", Toast.LENGTH_SHORT).show();
+            }
             if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
                 Toast.makeText(this, "parolner@ havasar chen", Toast.LENGTH_SHORT).show();
             }
@@ -84,10 +85,12 @@ public class RegistrationActivity extends AppCompatActivity {
             if (!validePassword(password.getText().toString())) {
                 Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Tamame", Toast.LENGTH_SHORT).show();
+                Request.register(this, userCreate());
             }
         } else {
-            Request.register(this, userCreate());
+            Toast.makeText(this, "lracreq bolor dashter@", Toast.LENGTH_SHORT).show();
+
+
         }
     }
 
@@ -121,6 +124,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private boolean validePassword(String password) {
         Matcher matcher = Constants.VALID_PASSWORD_REGEX.matcher(password);
+        return matcher.find();
+    }
+
+    private boolean validePhone(String phone) {
+        Matcher matcher = Constants.VALID_PHONE_REGEX.matcher(phone);
         return matcher.find();
     }
 }
