@@ -1,5 +1,6 @@
 package diploma.gyumri.theatre.view.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -141,21 +142,26 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(MainActivity.this, WebActivity.class);
-            startActivity(intent);
+
 
         } else if (id == R.id.nav_slideshow) {
             Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-            String facebookUrl = getFacebookPageURL(this);
-            facebookIntent.setData(Uri.parse(facebookUrl));
-            startActivity(facebookIntent);
+            try {
+                String facebookUrl = getFacebookPageURL(this);
+                facebookIntent.setData(Uri.parse(facebookUrl));
+                startActivity(facebookIntent);
+            } catch (PackageManager.NameNotFoundException | ActivityNotFoundException e) {
+                Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                intent.putExtra("url", "https://web.facebook.com/gyumritheatre/?fref=ts");
+                startActivity(intent);
+            }
+
 
         } else if (id == R.id.contact_us) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new ContactUsFragment(), "map")
                     .commit();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     public static String FACEBOOK_PAGE_ID = "1163153797037461";
 
     //method to get the right URL to use in the intent
-    public String getFacebookPageURL(Context context) {
+    public String getFacebookPageURL(Context context) throws PackageManager.NameNotFoundException {
         PackageManager packageManager = context.getPackageManager();
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;

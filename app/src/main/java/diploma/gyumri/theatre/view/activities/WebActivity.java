@@ -25,9 +25,9 @@ public class WebActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
         mWebView.setWebViewClient(new WebViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://web.facebook.com/gyumritheatre/?fref=ts");
+        mWebView.loadUrl(getIntent().getStringExtra("url"));
         setSupportActionBar(toolbar);
-        setTitle("Gyumri theatre facebook page");
+        setTitle(mWebView.getUrl());
         toolbar.setNavigationIcon(R.drawable.close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +35,6 @@ public class WebActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     @Override

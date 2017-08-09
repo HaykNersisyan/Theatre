@@ -9,90 +9,108 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:layout_weight="0"
         android:orientation="vertical">
 
         <LinearLayout
 
-            android:layout_marginTop="10dp"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_gravity="left"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/address"/>
+                android:layout_weight="2"
+                android:text="@string/address" />
+
             <TextView
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/address_value"/>
+                android:layout_weight="1"
+                android:text="@string/address_value" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Phone"/>
-            <TextView
-                android:layout_weight="3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="iasjhdasjhd"/>
-        </LinearLayout>
-        <LinearLayout
             android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Հեռ․" />
+
+            <TextView
+                android:id="@+id/call"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="+374-60-38-10-10" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Adress"/>
-            <TextView
-                android:layout_weight="3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="iasjhdasjhd"/>
-        </LinearLayout>
-        <LinearLayout
             android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Էլ․ Հասցե" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="info@gyumritheatre.am" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="FB"/>
-            <TextView
-                android:layout_weight="3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="iasjhdasjhd"/>
-        </LinearLayout>
-        <LinearLayout
             android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Facebook" />
+
+            <TextView
+                android:id="@+id/fb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="www.facebook.com/gyumritheatre" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Կայք" />
+
+            <TextView
+                android:id="@+id/site"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="iranc kayq@"/>
-            <TextView
-                android:layout_weight="3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="iasjhdasjhd"/>
+                android:text="http://gyumritheatre.am/" />
         </LinearLayout>
     </LinearLayout>
 
