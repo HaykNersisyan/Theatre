@@ -136,26 +136,12 @@ public class MainActivity extends AppCompatActivity
             } else {
                 switchFragment(MainFragment.newInstance(getSupportFragmentManager()), "MainFragment");
             }
-//            String uri = "fb://gyumritheatre/";
-//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//            startActivity(intent);
 
 
         } else if (id == R.id.nav_gallery) {
 
 
         } else if (id == R.id.nav_slideshow) {
-            Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-            try {
-                String facebookUrl = getFacebookPageURL(this);
-                facebookIntent.setData(Uri.parse(facebookUrl));
-                startActivity(facebookIntent);
-            } catch (PackageManager.NameNotFoundException | ActivityNotFoundException e) {
-                Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                intent.putExtra("url", "https://web.facebook.com/gyumritheatre/?fref=ts");
-                startActivity(intent);
-            }
-
 
         } else if (id == R.id.contact_us) {
             getSupportFragmentManager().beginTransaction()
@@ -176,22 +162,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, fragment, tag).addToBackStack(null).commit();
-        }
-    }
-
-    public static String FACEBOOK_URL = "https://www.facebook.com/gyumritheatre";
-    public static String FACEBOOK_PAGE_ID = "1163153797037461";
-
-    //method to get the right URL to use in the intent
-    public String getFacebookPageURL(Context context) throws PackageManager.NameNotFoundException {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            Log.i("111", "getFacebookPageURL: 2");
-            return "fb://page/" + FACEBOOK_PAGE_ID;
-
-        } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL; //normal web url
         }
     }
 
