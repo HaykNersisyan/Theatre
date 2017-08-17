@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -30,11 +29,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
+import diploma.gyumri.theatre.conteins.Constants;
 import diploma.gyumri.theatre.view.activities.MainActivity;
 import diploma.gyumri.theatre.view.activities.WebActivity;
 
-import static diploma.gyumri.theatre.view.activities.MainActivity.FACEBOOK_PAGE_ID;
-import static diploma.gyumri.theatre.view.activities.MainActivity.FACEBOOK_URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,9 +49,12 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
     TextView call;
     @BindView(R.id.site)
     TextView site;
+    @BindView(R.id.email)
+    TextView email;
 
     public ContactUsFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -103,7 +104,7 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
                     startActivity(facebookIntent);
                 } catch (PackageManager.NameNotFoundException | ActivityNotFoundException e) {
                     Intent intent = new Intent(getActivity(), WebActivity.class);
-                    intent.putExtra("url", "https://web.facebook.com/gyumritheatre/?fref=ts");
+                    intent.putExtra("url", Constants.FACEBOOK_URL);
                     startActivity(intent);
                 }
                 break;
@@ -116,7 +117,7 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
                 startActivity(intent);
                 break;
             case R.id.email:
-
+                email();
                 break;
         }
     }
@@ -126,22 +127,22 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
             Log.i("111", "getFacebookPageURL: 2");
-            return "fb://page/" + FACEBOOK_PAGE_ID;
+            return "fb://page/" + Constants.FACEBOOK_PAGE_ID;
 
         } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL; //normal web url
+            return Constants.FACEBOOK_URL; //normal web url
         }
     }
 
     private void call() {
-    alertDialog.setPositiveButton("Զանգահարել", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + call.getText().toString().trim()));
-            startActivity(callIntent);
-        }
-    });
+        alertDialog.setPositiveButton("Զանգահարել", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + call.getText().toString().trim()));
+                startActivity(callIntent);
+            }
+        });
         alertDialog.setNegativeButton("Չեղարկել", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -149,6 +150,17 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
             }
         });
         alertDialog.create().show();
+    }
+
+    private void email() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("plain/text");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{email.getText().toString()});
+        try {
+            startActivity(Intent.createChooser(i, "Ուղղարկել նամակ..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+
+        }
     }
 
     /**
