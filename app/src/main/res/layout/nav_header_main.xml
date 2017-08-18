@@ -33,7 +33,7 @@
             android:text="Mutq" />
 
         <Button
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColor"
             android:id="@+id/mainRegBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
