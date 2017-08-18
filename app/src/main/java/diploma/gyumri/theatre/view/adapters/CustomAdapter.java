@@ -53,9 +53,6 @@ public class CustomAdapter extends RecyclerView.Adapter<MyViewHolder> implements
     @Override
     public void onClick(View v) {
         int position = (int) v.getTag();
-        if (position == 2) {
-            events.get(position).setVideoUrl(null);
-        }
         fragmentManager.beginTransaction().
                 replace(R.id.container, new EventFragment(events.get(position)))
                 .addToBackStack(null)

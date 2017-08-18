@@ -1,11 +1,6 @@
 package diploma.gyumri.theatre.view.activities;
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,14 +54,19 @@ public class MainActivity extends AppCompatActivity
                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
                         return false;
-                    case MotionEvent.ACTION_UP:
-                        ((Button) v).setTextColor(Color.WHITE);
+                     case MotionEvent.ACTION_CANCEL:
+                        ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
                         Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
                         return false;
+                     case MotionEvent.ACTION_UP:
+                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                         Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
+                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                         return false;
                 }
-
                 return false;
+
             }
         });
     }

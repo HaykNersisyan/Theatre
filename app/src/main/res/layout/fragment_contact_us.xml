@@ -1,9 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="diploma.gyumri.theatre.view.fragments.ContactUsFragment">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroundColor"
+              android:orientation="vertical"
+              tools:context="diploma.gyumri.theatre.view.fragments.ContactUsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -24,13 +25,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/address" />
+                android:text="@string/address"
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+
                 android:layout_weight="1"
-                android:text="@string/address_value" />
+                android:text="@string/address_value"/>
         </LinearLayout>
 
         <LinearLayout
@@ -43,14 +47,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Հեռ․" />
+
+                android:text="Հեռ․"
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/call"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="+374-60-38-10-10" />
+                android:text="+374-60-38-10-10"
+
+                android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,14 +72,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Էլ․ Հասցե" />
+                android:text="Էլ․ Հասցե"
+
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_weight="1"
-                android:text="info@gyumritheatre.am" />
+                android:text="info@gyumritheatre.am"
+                android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
@@ -83,14 +96,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Facebook" />
+                android:text="Facebook"
+
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/fb"
+                android:textColor="@color/colorPrimary"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="www.facebook.com/gyumritheatre" />
+                android:text="www.facebook.com/gyumritheatre"/>
         </LinearLayout>
 
         <LinearLayout
@@ -103,14 +120,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Կայք" />
+
+                android:text="Կայք"
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/site"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="http://gyumritheatre.am/" />
+                android:textColor="@color/colorPrimary"
+
+                android:text="http://gyumritheatre.am/"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -119,5 +140,5 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.3" />
+        android:layout_weight="1.3"/>
 </LinearLayout>

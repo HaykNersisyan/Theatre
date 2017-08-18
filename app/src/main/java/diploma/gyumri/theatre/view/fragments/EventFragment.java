@@ -72,7 +72,7 @@ public class EventFragment extends Fragment {
                 " eget libero molestie porta. Nam tempor fringilla ultricies. Nam sem " +
                 "lectus, feugiat eget ullamcorper vitae, ornare et sem. Fusce dapibus ipsum" +
                 " sed laoreet suscipit. ";
-        expandableDescription.setText(yourText);
+        expandableDescription.setText(mEvent.getDesc());
         expandableDescription.setVisibility(View.INVISIBLE);
         descriptionLayout.setVisibility(View.INVISIBLE);
 

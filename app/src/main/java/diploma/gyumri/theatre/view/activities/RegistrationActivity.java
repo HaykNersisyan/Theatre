@@ -1,14 +1,15 @@
 package diploma.gyumri.theatre.view.activities;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,9 +20,6 @@ import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.conteins.Constants;
 import diploma.gyumri.theatre.model.User;
 import diploma.gyumri.theatre.request.Request;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
     @BindView(R.id.registerLogin)
@@ -63,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 return false;
             case MotionEvent.ACTION_UP:
                 ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
-                button.setTextColor(Color.WHITE);
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
                 button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
                 return false;
         }
@@ -77,6 +75,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 Toast.makeText(this, "asdasdasd", Toast.LENGTH_SHORT).show();
             }
             if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
+                password.setTextColor(Color.RED);
+                confirmPassword.setHighlightColor(Color.RED);
                 Toast.makeText(this, "parolner@ havasar chen", Toast.LENGTH_SHORT).show();
             }
             if (!validateEmail(email.getText().toString().trim())) {
