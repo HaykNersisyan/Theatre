@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         }
         if (getSupportFragmentManager().findFragmentByTag("MainFragment") != null &&
                 getSupportFragmentManager().findFragmentByTag("MainFragment").isVisible()) {
-            super.onBackPressed();
+            finish();
         }
         if (getSupportFragmentManager().findFragmentByTag("map") != null
                 && getSupportFragmentManager().findFragmentByTag("map").isVisible()) {

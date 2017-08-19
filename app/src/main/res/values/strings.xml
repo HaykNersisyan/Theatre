@@ -25,4 +25,8 @@
     <string name="address_value">Սայաթ Նովա 4</string>
     <string name="representation">Ներկայացումներ</string>
     <string name="log_in">Մուտք</string>
+    <string name="row">Շարք</string>
+    <string name="seat">Տեղ</string>
+    <string name="price">Գին</string>
+    <string name="remove">Ջնջել</string>
 </resources>

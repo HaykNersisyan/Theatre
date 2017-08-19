@@ -1,6 +1,5 @@
 package diploma.gyumri.theatre.view.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,7 +28,6 @@ import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Event;
-import diploma.gyumri.theatre.view.activities.RegistrationActivity;
 import diploma.gyumri.theatre.view.presenter.listeners.YouTubePlayerStateChangeListener;
 
 public class EventFragment extends Fragment {
@@ -137,8 +135,7 @@ public class EventFragment extends Fragment {
                 break;
             case R.id.buyTicket:
                 getFragmentManager().beginTransaction().
-                        replace(R.id.container, new ToBuyFragment())
-                        .addToBackStack(null)
+                        replace(R.id.container, new ToBuyFragment()).addToBackStack(null)
                         .commit();
                 break;
         }
