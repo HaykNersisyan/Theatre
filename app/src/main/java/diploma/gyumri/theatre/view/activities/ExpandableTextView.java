@@ -14,7 +14,7 @@ import diploma.gyumri.theatre.R;
 
 public class ExpandableTextView extends AppCompatTextView {
     private static final int DEFAULT_TRIM_LENGTH = 100;
-    private static final String ELLIPSIS = ".....";
+    private static final String ELLIPSIS = "...";
 
     private CharSequence originalText;
     private CharSequence trimmedText;

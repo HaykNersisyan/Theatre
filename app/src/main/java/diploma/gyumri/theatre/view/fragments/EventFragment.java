@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,10 +25,10 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Event;
-import diploma.gyumri.theatre.view.activities.ExpandableTextView;
 import diploma.gyumri.theatre.view.activities.RegistrationActivity;
 import diploma.gyumri.theatre.view.presenter.listeners.YouTubePlayerStateChangeListener;
 
@@ -37,13 +39,13 @@ public class EventFragment extends Fragment {
     private YouTubePlayerSupportFragment youTubePlayerFragment;
     private boolean notVideo;
     private Unbinder unbinder;
-    private boolean expandable = false;
+    private boolean expandable = true;
     @BindView(R.id.playerContainer)
     FrameLayout playerContainer;
     @BindView(R.id.imgEventFragment)
     ImageView imgEventFragment;
     @BindView(R.id.extDescription)
-    ExpandableTextView expandableDescription;
+    TextView description;
     @BindView(R.id.expandableImg)
     ImageView expandableImg;
     @BindView(R.id.txtTitle)
@@ -52,6 +54,9 @@ public class EventFragment extends Fragment {
     LinearLayout descriptionLayout;
     @BindView(R.id.buyTicket)
     Button buyTicketBtn;
+    @BindView(R.id.eventDate)
+    TextView eventDate;
+
     public EventFragment(Event event) {
         mEvent = event;
         this.notVideo = event.getVideoUrl() == null;
@@ -61,29 +66,19 @@ public class EventFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String yourText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                "Ut volutpat interdum interdum. Nulla laoreet lacus diam, vitae " +
-                "sodales sapien commodo faucibus. Vestibulum et feugiat enim. Donec " +
-                "semper mi et euismod tempor. Sed sodales eleifend mi id varius. Nam " +
-                "et ornare enim, sit amet gravida sapien. Quisque gravida et enim vel " +
-                "volutpat. Vivamus egestas ut felis a blandit. Vivamus fringilla " +
-                "dignissim mollis. Maecenas imperdiet interdum hendrerit. Aliquam" +
-                " dictum hendrerit ultrices. Ut vitae vestibulum dolor. Donec auctor ante" +
-                " eget libero molestie porta. Nam tempor fringilla ultricies. Nam sem " +
-                "lectus, feugiat eget ullamcorper vitae, ornare et sem. Fusce dapibus ipsum" +
-                " sed laoreet suscipit. ";
-        expandableDescription.setText(mEvent.getDesc());
-        expandableDescription.setVisibility(View.INVISIBLE);
-        descriptionLayout.setVisibility(View.INVISIBLE);
-
+        description.setText(mEvent.getDesc());
+//        expandableDescription.setVisibility(View.INVISIBLE);
+//        descriptionLayout.setVisibility(View.INVISIBLE);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
+
         unbinder = ButterKnife.bind(this, rootView);
+        eventDate.setText(mEvent.getDate());
+
         playerContainer.setVisibility(View.VISIBLE);
         youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
         txtTitle.setText(mEvent.getName());
@@ -122,27 +117,55 @@ public class EventFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.eventTitle)
-    void expandableBtnOnClick() {
-        expandableDescription.expandableTextListener();
-        if (expandable) {
-            expandableDescription.setVisibility(View.INVISIBLE);
-            descriptionLayout.setVisibility(View.INVISIBLE);
-            expandableImg.setImageDrawable(getResources().getDrawable(R.drawable.expand_button));
-        } else {
-            expandableDescription.setVisibility(View.VISIBLE);
-            descriptionLayout.setVisibility(View.VISIBLE);
+    @OnClick({R.id.eventTitle, R.id.buyTicket})
+    void expandableBtnOnClick(View view) {
+        switch (view.getId()) {
+//        expandableDescription.expandableTextListener();
+            case R.id.eventTitle:
+                if (expandable) {
+                    description.setVisibility(View.GONE);
+                    descriptionLayout.setVisibility(View.GONE);
+                    expandableImg.setImageDrawable(getResources().getDrawable(R.drawable.expand_button));
 
-            expandableImg.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_key));
+                } else {
+
+                    description.setVisibility(View.VISIBLE);
+                    descriptionLayout.setVisibility(View.VISIBLE);
+                    expandableImg.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_key));
+                }
+                expandable = !expandable;
+                break;
+            case R.id.buyTicket:
+                getFragmentManager().beginTransaction().
+                        replace(R.id.container, new ToBuyFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
         }
-        expandable = !expandable;
     }
 
-@OnClick(R.id.buyTicket)
-void onClick(){
-    Intent intent = new Intent(getActivity(), RegistrationActivity.class);
-    startActivity(intent);
-}
+    @OnTouch(R.id.buyTicket)
+    boolean onTouch(Button button, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
+                return false;
+            case MotionEvent.ACTION_CANCEL:
+                ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                return false;
+            case MotionEvent.ACTION_UP:
+                ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                return false;
+        }
+        return false;
+    }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();

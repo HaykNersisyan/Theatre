@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
-import diploma.gyumri.theatre.conteins.Constants;
+import diploma.gyumri.theatre.constants.Constants;
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.loginUser)

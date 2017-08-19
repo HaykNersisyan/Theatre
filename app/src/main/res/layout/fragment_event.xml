@@ -1,93 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/rlImgOrVideo"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:id="@+id/playerContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true" />
-
-            <ImageView
-                android:id="@+id/imgEventFragment"
-                android:layout_width="match_parent"
-                android:layout_height="165dp"
-                android:scaleType="centerCrop" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/eventTitle"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlImgOrVideo"
-            android:gravity="center"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/txtTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_margin="10dp"
-                android:text="vbxhfbvlzhvbflxhbf"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/expandableImg"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/expand_button" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/descriptionLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/eventTitle"
-            android:background="@color/colorDescription"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/rlImgOrVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <View
+                <FrameLayout
+                    android:id="@+id/playerContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" />
+
+                <ImageView
+                    android:id="@+id/imgEventFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/eventTitle"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/darker_gray" />
-
-            <diploma.gyumri.theatre.view.activities.ExpandableTextView
-                android:id="@+id/extDescription"
-                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/descTopLine"
-                android:layout_margin="20dp"
-                android:textSize="18sp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <View
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="vbxhfbvlzhvbflxhbf"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/expandableImg"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/up_arrow_key" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/descriptionLayout"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@+id/extDescription"
-                android:background="@android:color/darker_gray" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buyTicket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/descriptionLayout"
-            android:layout_centerHorizontal="true"
-            android:text="gnel"/>
-    </RelativeLayout>
-</ScrollView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/extDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/descTopLine"
+                    android:layout_gravity="center"
+                    android:padding="20dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/buyTicket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button"
+                android:text="gnel"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
