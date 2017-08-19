@@ -1,6 +1,5 @@
 package diploma.gyumri.theatre.view.fragments;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,8 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
-import diploma.gyumri.theatre.conteins.Constants;
-import diploma.gyumri.theatre.view.activities.MainActivity;
+import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.view.activities.WebActivity;
 
 

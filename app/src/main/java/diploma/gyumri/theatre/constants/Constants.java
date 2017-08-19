@@ -1,4 +1,4 @@
-package diploma.gyumri.theatre.conteins;
+package diploma.gyumri.theatre.constants;
 
 import java.util.regex.Pattern;
 

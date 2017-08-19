@@ -2,7 +2,7 @@ package diploma.gyumri.theatre;
 
 import android.app.Application;
 
-import diploma.gyumri.theatre.conteins.Constants;
+import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.net.APIService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
