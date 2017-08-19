@@ -2,7 +2,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/backgroundColor"
+              android:background="@drawable/background"
               android:orientation="vertical"
               tools:context="diploma.gyumri.theatre.view.fragments.ContactUsFragment">
 
@@ -10,12 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:padding="16dp"
         android:layout_weight="0"
         android:orientation="vertical">
 
-        <LinearLayout
 
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

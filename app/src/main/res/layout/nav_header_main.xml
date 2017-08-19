@@ -12,7 +12,7 @@
 
         android:layout_height="200dp"
         android:layout_marginTop="60dp"
-        android:src="@drawable/drawer_menu_img" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,9 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
+            android:textColor="@color/textColor"
             android:layout_marginTop="10dp"
             android:background="@drawable/button"
-            android:text="Mutq" />
+            android:text="@string/log_in" />
 
         <Button
             android:textColor="@color/textColor"
@@ -40,8 +41,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button"
-
-            android:text="Grancvel" />
+            android:text="@string/register" />
     </LinearLayout>
 </LinearLayout>
 

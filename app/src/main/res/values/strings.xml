@@ -23,4 +23,6 @@
     <string name="close">Փակել</string>
     <string name="address">Հասցե:</string>
     <string name="address_value">Սայաթ Նովա 4</string>
+    <string name="representation">Ներկայացումներ</string>
+    <string name="log_in">Մուտք</string>
 </resources>
