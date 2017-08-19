@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.representation) {
             if (getSupportFragmentManager().findFragmentByTag("MainFragment") != null &&
                     getSupportFragmentManager().findFragmentByTag("MainFragment").isVisible()) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
