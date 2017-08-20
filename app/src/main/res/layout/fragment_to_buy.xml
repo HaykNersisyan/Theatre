@@ -2,8 +2,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:gravity="center"
               android:background="@drawable/background"
+              android:gravity="center"
               android:orientation="vertical"
               tools:context="diploma.gyumri.theatre.view.fragments.ToBuyFragment">
 
@@ -13,18 +13,28 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
+            <TextView
+                android:id="@+id/eventTitleHall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:paddingTop="16dp"/>
+
             <diploma.gyumri.theatre.view.HallView
                 android:id="@+id/hallView"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-               />
+                android:layout_weight="1"
+                />
 
             <LinearLayout
                 android:id="@+id/tickets_list_desc"
@@ -33,7 +43,8 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -71,7 +82,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                >
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/tickets_list"
@@ -80,6 +91,15 @@
 
                 </android.support.v7.widget.RecyclerView>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/selectedTicketsDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:textAlignment="center"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

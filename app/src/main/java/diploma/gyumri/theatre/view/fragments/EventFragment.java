@@ -135,7 +135,7 @@ public class EventFragment extends Fragment {
                 break;
             case R.id.buyTicket:
                 getFragmentManager().beginTransaction().
-                        replace(R.id.container, new ToBuyFragment()).addToBackStack(null)
+                        replace(R.id.container, new ToBuyFragment(mEvent)).addToBackStack(null)
                         .commit();
                 break;
         }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ScaleGestureDetector;
@@ -11,6 +12,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Ticket;
 
 /**
@@ -34,7 +36,6 @@ public class HallView extends View {
         super(c, attrs);
         paint = new Paint();
         scaleDetector = new ScaleGestureDetector(c, new ScaleListener());
-
 
     }
 
@@ -78,14 +79,13 @@ public class HallView extends View {
             Log.i("tag", "iii()");
             iii();
         }
-        paint.setColor(Color.YELLOW);
         a = getWidth() / 11;
 //        a = 50;
         radius = 0.4f * a;
         for (int j = tickets.length - 1; j >= 0; j--) {
             for (int i = 0; i < tickets[j].size(); i++) {
-                y = (7 - j) * a + 0.5f * a;
-                x = (i) * a + 0.5f * a;
+                y = ((7 - j) * a + 0.5f * a) + a / 2;
+                x = ((i) * a + 0.5f * a) + a / 2;
 //                if (i < 17) {
 //                    x = (2 + i) * a + 0.5f * a;
 //                } else {
@@ -95,12 +95,11 @@ public class HallView extends View {
                 tickets[j].get(i).draw(canvas, x, y, radius);
             }
         }
-
-        canvas.drawRect(1f * a, 8.3f * a, 9f * a, 9.5f * a, paint);
-        paint.setColor(Color.RED);
+        paint.setColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+        canvas.drawRect(1f * a + (a / 2), 8.3f * a + (a / 2), 9f * a + (a / 2), 9.5f * a + a, paint);
+        paint.setColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
         paint.setTextSize(1f * a);
-
-        canvas.drawText("ԲԵՄ", 4f * a, 9.3f * a, paint);
+        canvas.drawText("ԲԵՄ", 4f * a + (a / 2), 9.5f * a + (a / 2), paint);
         try {
             canvas.restore();
         } catch (IllegalStateException e) {
@@ -123,7 +122,3 @@ public class HallView extends View {
         }
     }
 }
-
-
-
-
