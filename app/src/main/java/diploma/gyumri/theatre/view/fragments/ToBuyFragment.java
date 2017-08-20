@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
+import diploma.gyumri.theatre.model.Event;
 import diploma.gyumri.theatre.model.Ticket;
 import diploma.gyumri.theatre.view.HallView;
 import diploma.gyumri.theatre.view.adapters.TicketsAdapter;
@@ -37,10 +39,14 @@ public class ToBuyFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.tickets_list_desc)
     LinearLayout ticketsListDescription;
+    @BindView(R.id.selectedTicketsDescription)
+    TextView selectedTicketsDescription;
+    @BindView(R.id.eventTitleHall)
+    TextView eventTitle;
+    Event event;
 
-
-    public ToBuyFragment() {
-        // Required empty public constructor
+    public ToBuyFragment(Event event) {
+        this.event = event;
     }
 
 
@@ -55,6 +61,7 @@ public class ToBuyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_to_buy, container, false);
         unbinder = ButterKnife.bind(this, view);
+        eventTitle.setText(event.getName());
         int i = getActivity().getWindowManager().getDefaultDisplay().getWidth();
         ticketsListDescription.setVisibility(View.GONE);
         adapter = new TicketsAdapter(getActivity(), new ArrayList<Ticket>(), this);
@@ -62,6 +69,7 @@ public class ToBuyFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
         hallView.setLayoutParams(new LinearLayout.LayoutParams(i, i));
+        selectedTicketsDescription.setVisibility(View.GONE);
         return view;
     }
 
@@ -83,7 +91,9 @@ public class ToBuyFragment extends Fragment {
                         recyclerViewSetAdapter(ticket, Ticket.State.AVAILABLE);
                     }
                 }
-
+                if (ticketList.size() != 0) {
+                    selectedTicketsDescription();
+                }
                 hallView.invalidate();
                 return true;
             }
@@ -98,38 +108,43 @@ public class ToBuyFragment extends Fragment {
     }
 
     public void removeFromList(int position) {
-        Ticket ticket = null;
-        lab:
-        for (int i = 0; i < hallView.tickets.length; i++) {
-            for (int j = 0; j < hallView.tickets[i].size(); j++) {
-                if (hallView.tickets[i].get(j).getSeat() == ticketList.get(position).getSeat()
-                        && hallView.tickets[i].get(j).getRow() == ticketList.get(position).getRow()) {
-                    ticket = ticketList.remove(position);
-                    if (ticketList.size() == 0) {
-                        ticketsListDescription.setVisibility(View.GONE);
-                    }
-                    break lab;
-                }
-            }
+        if (ticketList.get(position).getState() == Ticket.State.SELECTED) {
+            ticketList.get(position).setState(Ticket.State.AVAILABLE);
+        } else if (ticketList.get(position).getState() == Ticket.State.AVAILABLE) {
+            ticketList.get(position).setState(Ticket.State.SELECTED);
         }
-        if (ticket != null) {
-            if (ticket.getState() == Ticket.State.SELECTED) {
-                if (ticketList == null) {
-                    ticketList = new ArrayList<>();
-                }
-                ticket.setState(Ticket.State.AVAILABLE);
-            } else if (ticket.getState() == Ticket.State.AVAILABLE) {
-                ticket.setState(Ticket.State.SELECTED);
-            }
-            hallView.invalidate();
+        hallView.invalidate();
+        ticketList.remove(position);
+        if (ticketList.size() == 0) {
+            selectedTicketsDescription.setVisibility(View.GONE);
+            ticketsListDescription.setVisibility(View.GONE);
+        }else {
+            selectedTicketsDescription();
         }
         adapter = new TicketsAdapter(getActivity(), ticketList, this);
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+
+    private void selectedTicketsDescription() {
+        selectedTicketsDescription.setVisibility(View.VISIBLE);
+        selectedTicketsDescription.setText("Ընտրված է " + ticketList.size() + " տոմս " +
+                selectedTicketsPrice() + " ՀՀ դրամ ընդհանուր արժողությամբ։");
+    }
+
+
+    private int selectedTicketsPrice() {
+        int price = 0;
+        for (int i = 0; i < ticketList.size(); i++) {
+            price += ticketList.get(i).getPrice();
+        }
+        return price;
     }
 }
