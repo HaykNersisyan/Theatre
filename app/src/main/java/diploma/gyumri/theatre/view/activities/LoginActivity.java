@@ -12,6 +12,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
+import diploma.gyumri.theatre.model.User;
+import diploma.gyumri.theatre.request.Request;
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.loginUser)
@@ -29,11 +31,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.signInBtn)
     void onClick() {
-        if (validUser()) {
-            if (validPassword(passwordUser.getText().toString())){
-                
-            }
-        }
+//        if (validUser()) {
+//            if (validPassword(passwordUser.getText().toString())){
+
+                Request.login(this,new User("artash","denwer",null,null,null,null,null));
+//            }
+//        }
     }
 
     private boolean validUser() {

@@ -1,5 +1,6 @@
 package diploma.gyumri.theatre.request;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
@@ -9,8 +10,10 @@ import diploma.gyumri.theatre.data.dto.EventsDTO;
 import diploma.gyumri.theatre.data.mappers.EventsMapper;
 import diploma.gyumri.theatre.model.Event;
 import diploma.gyumri.theatre.model.User;
+import diploma.gyumri.theatre.view.activities.LoginActivity;
 import diploma.gyumri.theatre.view.activities.MainActivity;
 import diploma.gyumri.theatre.view.activities.RegistrationActivity;
+import diploma.gyumri.theatre.view.fragments.MainFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,13 +23,14 @@ import retrofit2.Response;
  */
 
 public class Request {
-    public static void requestPharmacies(final MainActivity activity) {
+    public static void requestEvents(final MainActivity activity, final MainFragment fragment) {
         ((MyApplication) activity.getApplication()).getApiService().getEvents().enqueue(new Callback<EventsDTO>() {
             @Override
             public void onResponse(Call<EventsDTO> call, Response<EventsDTO> response) {
-                EventsDTO pharmaciesDTO = response.body();
-                List<Event> model = EventsMapper.toEvents(pharmaciesDTO);
-
+                EventsDTO eventsDTO = response.body();
+                List<Event> model = EventsMapper.toEvents(eventsDTO);
+                Log.i("TAG", "onResponse: " + eventsDTO.getEvents().get(0).getName());
+                fragment.listInit(model);
             }
 
             @Override
@@ -37,17 +41,30 @@ public class Request {
     }
 
 
-    public static void register(final RegistrationActivity activity, User user) {
-        ((MyApplication) activity.getApplication()).getApiService().register(user).enqueue(new Callback<User>() {
+    public static void login(final LoginActivity activity, User user) {
+        Call<String> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
 
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(activity, "Stugenq internet@", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
+//        ((MyApplication) activity.getApplication()).getApiService().login(user).enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse( Response<String> response) {
+//                Log.i("TAG", "onResponse: " + response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Log.i("TAG", "onResponse: fail" + call.toString());
+//
+//            }
+//        });
     }
 }

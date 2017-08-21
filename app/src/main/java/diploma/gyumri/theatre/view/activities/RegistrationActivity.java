@@ -85,8 +85,9 @@ public class RegistrationActivity extends AppCompatActivity {
             if (!validePassword(password.getText().toString())) {
                 Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
             } else {
-                Request.register(this, userCreate());
+//                Request.register(this, userCreate());
             }
+
         } else {
             Toast.makeText(this, "lracreq bolor dashter@", Toast.LENGTH_SHORT).show();
 
