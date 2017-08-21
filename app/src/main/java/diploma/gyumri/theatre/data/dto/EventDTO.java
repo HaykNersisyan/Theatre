@@ -11,7 +11,7 @@ import lombok.Data;
 public class EventDTO {
     @SerializedName("name")
     private String name;
-    @SerializedName("desc")
+    @SerializedName("description")
     private String desc;
     @SerializedName("price")
     private String price;
@@ -19,8 +19,8 @@ public class EventDTO {
     private String stage;
     @SerializedName("date")
     private String date;
-    @SerializedName("imgUrl")
+    @SerializedName("imageurl")
     private String imgUrl;
-    @SerializedName("videUrl")
+    @SerializedName("videourl")
     private String videoUrl;
 }

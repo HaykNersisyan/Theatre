@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private Button regBtn;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,14 @@ public class MainActivity extends AppCompatActivity
                          return false;
                 }
                 return false;
-
+            }
+        });
+        loginButton = (Button) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.mainLoginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
