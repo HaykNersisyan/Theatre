@@ -41,7 +41,8 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-//        List<Event> events = JsonParser.getEventList(getActivity());
+        List<Event> events = JsonParser.getEventList(getActivity());
+        listInit(events);
         Request.requestEvents((MainActivity) getActivity(),this);
 
     }
