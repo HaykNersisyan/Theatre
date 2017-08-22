@@ -1,20 +1,25 @@
 package diploma.gyumri.theatre.view.fragments;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +34,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
+import diploma.gyumri.theatre.view.activities.MainActivity;
 import diploma.gyumri.theatre.view.activities.WebActivity;
 
 
@@ -128,17 +134,61 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
             return "fb://page/" + Constants.FACEBOOK_PAGE_ID;
 
         } catch (PackageManager.NameNotFoundException e) {
-            return Constants.FACEBOOK_URL; //normal web url
+            return Constants.FACEBOOK_URL;
         }
+    }
+
+    public  boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (getActivity().checkSelfPermission(android.Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("TAG","Permission is revoked");
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return false;
+            }
+        }
+        else {
+            Log.v("TAG","Permission is granted");
+            return true;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    call_action();
+                } else {
+                    Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+        }
+    }
+
+    public void call_action(){
+        String phnum = call.getText().toString();
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + phnum));
+        startActivity(callIntent);
     }
 
     private void call() {
         alertDialog.setPositiveButton("Զանգահարել", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:" + call.getText().toString().trim()));
-                startActivity(callIntent);
+                if (isPermissionGranted()){
+                    call_action();
+                }
             }
         });
         alertDialog.setNegativeButton("Չեղարկել", new DialogInterface.OnClickListener() {
