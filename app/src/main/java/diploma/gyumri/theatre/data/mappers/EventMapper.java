@@ -10,6 +10,7 @@ import diploma.gyumri.theatre.model.Event;
 public class EventMapper {
     public static Event toEvent(EventDTO eventDTO) {
         Event event = new Event();
+        event.setId(eventDTO.getId());
         event.setName(eventDTO.getName());
         event.setDesc(eventDTO.getName());
         event.setPrice(eventDTO.getPrice());

@@ -1,18 +1,16 @@
 package diploma.gyumri.theatre.request;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 
 import diploma.gyumri.theatre.MyApplication;
 import diploma.gyumri.theatre.data.dto.EventsDTO;
+import diploma.gyumri.theatre.data.dto.UserResponseDTO;
 import diploma.gyumri.theatre.data.mappers.EventsMapper;
 import diploma.gyumri.theatre.model.Event;
-import diploma.gyumri.theatre.model.User;
 import diploma.gyumri.theatre.view.activities.LoginActivity;
 import diploma.gyumri.theatre.view.activities.MainActivity;
-import diploma.gyumri.theatre.view.activities.RegistrationActivity;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,16 +39,17 @@ public class Request {
     }
 
 
-    public static void login(final LoginActivity activity, User user) {
-        Call<String> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
-        call.enqueue(new Callback<String>() {
+    public static void login(final LoginActivity activity, UserResponseDTO user) {
+        Call<UserResponseDTO> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
+        call.enqueue(new Callback<UserResponseDTO>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
+            public void onResponse(Call<UserResponseDTO> call, Response<UserResponseDTO> response) {
+                response.raw();
+                Log.i("TAG", "onResponse: " + response.body().getToken());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<UserResponseDTO> call, Throwable t) {
 
             }
         });

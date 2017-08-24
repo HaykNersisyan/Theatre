@@ -2,7 +2,6 @@ package diploma.gyumri.theatre.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
@@ -10,7 +9,7 @@ import android.util.Log;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Ticket;
@@ -20,34 +19,64 @@ import diploma.gyumri.theatre.model.Ticket;
  */
 
 public class HallView extends View {
-    ScaleGestureDetector scaleDetector;
-    private float scaleFactor = 1.f;
+    private ScaleGestureDetector scaleDetector;
+    private float scaleFactor = 1f;
+    private boolean zoomed = false;
 
     //        Paint p;
-    Canvas canvas;
-    Paint paint;
-    float radius;
-    float x;
-    float y;
-    float a;
+    private Paint paint;
+    private float radius;
+    private float x;
+    private float y;
+    private float a;
+    private List<Ticket>[] tickets;
+
+    public List<Ticket>[] getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket>[] tickets) {
+        this.tickets = tickets;
+    }
+
+    private float temp = 1f;
+
+    public void zoomIn() {
+        if (scaleFactor == 3f) {
+            return;
+        }
+        if (scaleFactor == 2) {
+            temp = 2.0f;
+        }
+        zoomed = true;
+        scaleFactor += 1.0f;
+        invalidate();
+    }
+
+    public void zoomOut() {
+        if (scaleFactor == 3f) {
+            scaleFactor -= 1.0f;
+            temp = 1.0f;
+            invalidate();
+            return;
+        }
+        if (scaleFactor == 2) {
+            scaleFactor -= 1.0f;
+            zoomed = false;
+            invalidate();
+            return;
+        }
+        if (scaleFactor == 1) {
+            zoomed = false;
+            return;
+
+        }
+    }
 
 
     public HallView(Context c, AttributeSet attrs) {
         super(c, attrs);
         paint = new Paint();
-        scaleDetector = new ScaleGestureDetector(c, new ScaleListener());
-
-    }
-
-    public ArrayList<Ticket>[] tickets = new ArrayList[8];
-
-    private void iii() {
-        for (int i = 0; i < tickets.length; i++) {
-            tickets[i] = new ArrayList<>(10);
-            for (int j = 0; j < 10; j++) {
-                tickets[i].add(new Ticket(i + 1, j + 1, 4, 1500, Color.RED));
-            }
-        }
     }
 
     public Ticket select(float x, float y) {
@@ -56,10 +85,18 @@ public class HallView extends View {
         for (int j = tickets.length - 1; j >= 0; j--) {
             for (int i = 0; i < tickets[j].size(); i++) {
                 ticket = tickets[j].get(i);
-                maxX = ticket.getcX() + ticket.getRadius() * 1.6f;
-                minX = ticket.getcX() - ticket.getRadius() * 1.6f;
-                maxY = ticket.getcY() + ticket.getRadius() * 1.6f;
-                minY = ticket.getcY() - ticket.getRadius() * 1.6f;
+
+                if (zoomed) {
+                    maxX = (ticket.getcX() + ticket.getcX() * temp) + (ticket.getRadius() + ticket.getRadius() * temp) * 1.6f;
+                    minX = (ticket.getcX() + ticket.getcX() * temp) - (ticket.getRadius() + ticket.getRadius() * temp) * 1.6f;
+                    maxY = (ticket.getcY() + ticket.getcY() * temp) + (ticket.getRadius() + ticket.getRadius() * temp) * 1.6f;
+                    minY = (ticket.getcY() + ticket.getcY() * temp) - (ticket.getRadius() + ticket.getRadius() * temp) * 1.6f;
+                } else {
+                    maxX = ticket.getcX() + ticket.getRadius() * 1.6f;
+                    minX = ticket.getcX() - ticket.getRadius() * 1.6f;
+                    maxY = ticket.getcY() + ticket.getRadius() * 1.6f;
+                    minY = ticket.getcY() - ticket.getRadius() * 1.6f;
+                }
                 if (x > minX && x < maxX && y > minY && y < maxY) {
                     return ticket;
                 }
@@ -71,14 +108,12 @@ public class HallView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        this.canvas = canvas;
         canvas.save();
         canvas.scale(scaleFactor, scaleFactor);
-
-        if (tickets[0] == null) {
-            Log.i("tag", "iii()");
-            iii();
+        if (tickets == null) {
+            return;
         }
+        Log.i("DRAW", "onDraw: " + tickets.length);
         a = getWidth() / 11;
 //        a = 50;
         radius = 0.4f * a;
@@ -104,21 +139,6 @@ public class HallView extends View {
             canvas.restore();
         } catch (IllegalStateException e) {
             Log.i("Tag", "onDraw: " + e);
-        }
-
-    }
-
-    public ScaleGestureDetector detector;
-
-    private class ScaleListener extends
-            ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            HallView.this.detector = detector;
-            scaleFactor *= detector.getScaleFactor();
-            scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 15.0f));
-            invalidate();
-            return true;
         }
     }
 }

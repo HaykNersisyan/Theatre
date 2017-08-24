@@ -1,7 +1,7 @@
 package diploma.gyumri.theatre.view.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
 import java.util.regex.Matcher;
@@ -12,7 +12,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
-import diploma.gyumri.theatre.model.User;
+import diploma.gyumri.theatre.data.dto.UserResponseDTO;
 import diploma.gyumri.theatre.request.Request;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,8 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     void onClick() {
 //        if (validUser()) {
 //            if (validPassword(passwordUser.getText().toString())){
-
-                Request.login(this,new User("artash","denwer",null,null,null,null,null));
+        UserResponseDTO user = new UserResponseDTO();
+        user.setLogin(loginUser.getText().toString());
+        user.setPassword(passwordUser.getText().toString());
+        Request.login(this, user);
 //            }
 //        }
     }
