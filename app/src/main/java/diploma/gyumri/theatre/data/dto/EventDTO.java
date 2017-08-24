@@ -9,6 +9,8 @@ import lombok.Data;
  */
 @Data
 public class EventDTO {
+    @SerializedName("event_id")
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("description")

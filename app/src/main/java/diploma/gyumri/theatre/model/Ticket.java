@@ -4,7 +4,6 @@ package diploma.gyumri.theatre.model;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 import lombok.Data;
 
@@ -34,6 +33,10 @@ public class Ticket {
         this.row = row;
         this.seat = seat;
         this.price = price;
+    }
+
+    public Ticket(){
+
     }
 
     public Canvas getCanvas() {

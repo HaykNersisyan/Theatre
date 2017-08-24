@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="diploma.gyumri.theatre.view.activities.WebActivity">
+    tools:context="diploma.gyumri.theatre.view.activities.WebActivity"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,12 +19,12 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_marginLeft="20dp"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+             android:id="@+id/webView"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"/>
 </android.support.design.widget.CoordinatorLayout>

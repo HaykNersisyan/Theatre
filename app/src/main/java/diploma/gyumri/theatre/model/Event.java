@@ -9,6 +9,7 @@ import lombok.Data;
 public
 @Data
 class Event {
+    private int id;
     private String name;
     private String desc;
     private String price;
