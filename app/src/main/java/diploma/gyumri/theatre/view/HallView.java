@@ -18,18 +18,45 @@ import diploma.gyumri.theatre.model.Ticket;
  * Created by Hayk on 15.08.2017.
  */
 
+
 public class HallView extends View {
     private ScaleGestureDetector scaleDetector;
     private float scaleFactor = 1f;
     private boolean zoomed = false;
+    private float previousX;
+    private float previousY;
 
     //        Paint p;
     private Paint paint;
     private float radius;
-    private float x;
+    private float x, X, Y;
     private float y;
     private float a;
     private List<Ticket>[] tickets;
+
+    @Override
+    public float getX() {
+        return X;
+    }
+
+    @Override
+    public float getY() {
+        return Y;
+    }
+
+    @Override
+    public void setX(float x) {
+        X += x;
+        if (X >= 0){
+            X = 0;
+        }
+    }
+
+    @Override
+    public void setY(float y) {
+//        previousY = Y;
+        Y += y;
+    }
 
     public List<Ticket>[] getTickets() {
         return tickets;
@@ -72,6 +99,8 @@ public class HallView extends View {
 
         }
     }
+
+
 
 
     public HallView(Context c, AttributeSet attrs) {
@@ -119,8 +148,8 @@ public class HallView extends View {
         radius = 0.4f * a;
         for (int j = tickets.length - 1; j >= 0; j--) {
             for (int i = 0; i < tickets[j].size(); i++) {
-                y = ((7 - j) * a + 0.5f * a) + a / 2;
-                x = ((i) * a + 0.5f * a) + a / 2;
+                y = ((7 - j) * a + 0.5f * a) + a / 2 + Y;
+                x = ((i) * a + 0.5f * a) + a / 2 + X;
 //                if (i < 17) {
 //                    x = (2 + i) * a + 0.5f * a;
 //                } else {

@@ -78,6 +78,8 @@ public class Ticket {
         this.radius *= a;
     }
 
+
+
     public Ticket(int row, int seat, int id, int price, int color) {
         this.row = row;
         this.seat = seat;

@@ -1,10 +1,15 @@
 package diploma.gyumri.theatre.view.fragments;
 
 
+import android.content.ClipData;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +41,8 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
@@ -46,6 +53,10 @@ public class ToBuyFragment extends Fragment {
     private List<Ticket> ticketList;
     private Socket mSocket;
     private Event event;
+    private float sX, sY, mX, mY;
+    private boolean isZoomed;
+    private int zoom;
+
     @BindView(R.id.hallView)
     HallView hallView;
     @BindView(R.id.tickets_list)
@@ -56,10 +67,11 @@ public class ToBuyFragment extends Fragment {
     TextView selectedTicketsDescription;
     @BindView(R.id.eventTitleHall)
     TextView eventTitle;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
 
 
     private IO.Options headers = new IO.Options();
-    private boolean ticketsLoaded = false;
 
 
     public ToBuyFragment(Event event) {
@@ -89,13 +101,11 @@ public class ToBuyFragment extends Fragment {
         mSocket.connect();
         mSocket.emit("tickets", 21);
         mSocket.on("tickets", new Emitter.Listener() {
-
             @Override
             public void call(Object... args) {
                 JSONObject obj = (JSONObject) args[0];
                 Gson gson = new Gson();
                 hallView.setTickets(TicketsMapper.toTickets(gson.fromJson(args[0].toString(), TicketsDTO.class)));
-                ticketsLoaded = true;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -115,8 +125,92 @@ public class ToBuyFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         hallView.setLayoutParams(new LinearLayout.LayoutParams(i, i));
         selectedTicketsDescription.setVisibility(View.GONE);
+
+//        hallView.setOnTouchListener(new MyTouchListener());
+//        hallView.setOnDragListener(new MyDragListener());
+
         return view;
     }
+
+
+    class MyDragListener implements View.OnDragListener {
+
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            int action = event.getAction();
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    // do nothing
+                    Log.i("Tag", "Action Drag Started");
+                    break;
+                case DragEvent.ACTION_DRAG_ENTERED:
+
+                    Log.i("Tag", "Action Drag Entered");
+                    break;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    Log.i("Tag", "Action Drag Exited");
+                    break;
+                case DragEvent.ACTION_DROP:
+                    // Dropped, reassign View to ViewGroup
+//                    View view = (View) event.getLocalState();
+//                    ViewGroup owner = (ViewGroup) view.getParent();
+//                    owner.removeView(view);
+//                    LinearLayout container = (LinearLayout) v;
+//                    container.addView(view);
+//                    view.setVisibility(View.VISIBLE);
+//                    List<Ticket>[] tickets = hallView.getTickets();
+//                    Ticket ticket;
+//                    float cX, cY, mX, mY;
+//
+//                    mX = event.getX() - sX;
+//                    mY = event.getY() - sY;
+//
+//                    for (int i = 0; i < tickets.length; i++) {
+//                        for (int j = 0; j < tickets[i].size(); j++) {
+//                            ticket = tickets[i].get(j);
+//
+//                            cX = ticket.getcX() + mX;
+//                            cY = ticket.getcY() + mY;
+//                            ticket.move(cX, cY);
+//
+//                        }
+//                    }
+//
+//                    hallView.invalidate();
+
+
+                    Log.i("Tag", "Action Drop");
+
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+
+                    hallView.invalidate();
+
+                    Log.i("Tag", "Action Drag Ended");
+                default:
+                    Log.i("Tag", "Default");
+                    break;
+            }
+            return true;
+        }
+    }
+
+
+//    private final class MyTouchListener implements View.OnTouchListener {
+//        public boolean onTouch(View view, MotionEvent motionEvent) {
+//            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                ClipData data = ClipData.newPlainText("", "");
+//                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+//                view.startDrag(data, shadowBuilder, view, 0);
+//                view.setVisibility(View.INVISIBLE);
+//                sX = motionEvent.getX();
+//                sY = motionEvent.getY();
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        }
+//    }
 
     @Override
     public void onDestroy() {
@@ -130,16 +224,30 @@ public class ToBuyFragment extends Fragment {
         switch (view.getId()) {
             case R.id.zoomIn:
                 hallView.zoomIn();
+                zoom++;
+                if (zoom > 0) {
+                    isZoomed = true;
+                }
                 break;
             case R.id.zoomOut:
                 hallView.zoomOut();
+                zoom--;
+                if (zoom == 0) {
+                    isZoomed = false;
+                }
                 break;
         }
+
     }
+
 
     @OnTouch(R.id.hallView)
     boolean onTouch(View v, MotionEvent event) {
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            sX = event.getX();
+            sY = event.getY();
+
             if (hallView.getTickets() == null) {
                 return false;
             }
@@ -162,8 +270,27 @@ public class ToBuyFragment extends Fragment {
                     selectedTicketsDescription();
                 }
                 hallView.invalidate();
+                Log.i("Tag", sY + "   " + sX);
                 return true;
             }
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (isZoomed) {
+
+
+                Log.i("Tag", "Action Move ");
+                mX = event.getX() - sX;
+                mY = event.getY() - sY;
+
+
+
+                hallView.setX(mX);
+                hallView.setY(mY);
+                Log.i("Tag", mX + " " + mY);
+
+                hallView.invalidate();
+            }
+
+
         }
         return false;
     }
