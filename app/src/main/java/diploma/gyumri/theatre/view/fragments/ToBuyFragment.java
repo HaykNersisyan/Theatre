@@ -1,8 +1,6 @@
 package diploma.gyumri.theatre.view.fragments;
 
 
-import android.content.ClipData;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -40,8 +38,6 @@ import diploma.gyumri.theatre.view.adapters.TicketsAdapter;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.

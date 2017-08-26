@@ -47,7 +47,7 @@ public class HallView extends View {
     @Override
     public void setX(float x) {
         X += x;
-        if (X >= 0){
+        if (X >= 0) {
             X = 0;
         }
     }
@@ -99,8 +99,6 @@ public class HallView extends View {
 
         }
     }
-
-
 
 
     public HallView(Context c, AttributeSet attrs) {
