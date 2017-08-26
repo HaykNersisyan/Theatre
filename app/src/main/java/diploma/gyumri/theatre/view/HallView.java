@@ -8,11 +8,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Ticket;
+import diploma.gyumri.theatre.view.activities.MainActivity;
 
 /**
  * Created by Hayk on 15.08.2017.
@@ -46,16 +48,40 @@ public class HallView extends View {
 
     @Override
     public void setX(float x) {
+        float temp = X;
         X += x;
         if (X >= 0) {
             X = 0;
+        }
+        Log.i("DDD", "setX: tickets " + tickets[0].get(9).getcX());
+        Log.i("DDD", "setX: getWith" + getWidth());
+        Log.i("DDD", "setX: XXXX" + X);
+
+        if (tickets[0].get(9).getcX() <= getWidth() / 2 - ((getWidth() / 11))/2) {
+            if (x < 0) {
+                X = temp;
+            }
+
         }
     }
 
     @Override
     public void setY(float y) {
-//        previousY = Y;
+        float temp = Y;
         Y += y;
+        if (Y >= 0) {
+            Y = 0;
+        }
+        if (tickets[0].get(0).getcY() <= getHeight() / 2 - (getHeight() / 11) / 2) {
+            if (y < 0) {
+                Y = temp;
+            }
+        }
+
+        Log.i("GGG", "setY:YYY " + Y);
+        Log.i("GGG", "setY: hhhh" + getHeight());
+        Log.i("GGG", "setY:ssssss " + tickets[0].get(0).getcY());
+        Log.i("GGG", "setY:ssssss " + tickets[7].get(0).getcY());
     }
 
     public List<Ticket>[] getTickets() {
@@ -146,8 +172,8 @@ public class HallView extends View {
         radius = 0.4f * a;
         for (int j = tickets.length - 1; j >= 0; j--) {
             for (int i = 0; i < tickets[j].size(); i++) {
-                y = ((7 - j) * a + 0.5f * a) + a / 2 + Y;
-                x = ((i) * a + 0.5f * a) + a / 2 + X;
+                y = ((7 - j) * a + 0.5f * a) + (a / 2) + Y;
+                x = ((i) * a + 0.5f * a) + (a / 2) + X;
 //                if (i < 17) {
 //                    x = (2 + i) * a + 0.5f * a;
 //                } else {
@@ -167,5 +193,11 @@ public class HallView extends View {
         } catch (IllegalStateException e) {
             Log.i("Tag", "onDraw: " + e);
         }
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
     }
 }

@@ -55,7 +55,7 @@ public class JsonParser {
                     "      \"price\": \" 1000-2500\",\n" +
                     "      \"stage\": \" Big hall \",\n" +
                     "      \"date\": \" Sa Jul 29 18:00:00\",\n" +
-                    "      \"imgUrl\": \"https://i.ytimg.com/vi/By6edE8t-Ao/maxresdefault.jpg \",\n" +
+                    "      \"imgUrl\": \" http://gyumritheatre.am/demo/frontend/web/uploads/anons/beast-on-the-moon-1492121331.jpg\",\n" +
                     "      \"videoUrl\": \"BLPC0b5uZOI\"\n" +
                     "    },\n" +
                     "    {\n" +
@@ -64,7 +64,7 @@ public class JsonParser {
                     "      \"price\": \" 1000-2500\",\n" +
                     "      \"stage\": \" Big hall \",\n" +
                     "      \"date\": \" Tue Jul 25 17:00:00\",\n" +
-                    "      \"imgUrl\": \" https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-9/18486449_1615883995097770_5915545111604871807_n.jpg?oh=154a5dfdc0bb4c050f0cd5c9eff4696e&oe=5A0AA331\",\n" +
+                    "      \"imgUrl\": \" http://gyumritheatre.am/demo/frontend/web/uploads/anons/crazy-story-1499125316.jpg\",\n" +
                     "      \"videoUrl\": \" asdasdasd asd \"\n" +
                     "    },\n" +
                     "    {\n" +
@@ -77,7 +77,7 @@ public class JsonParser {
                     "      \"price\": \" 1000-2500\",\n" +
                     "      \"stage\": \" Small hall \",\n" +
                     "      \"date\": \" Wed Jul 26 19:00:00\",\n" +
-                    "      \"imgUrl\": \" http://gyumritheatre.am/demo/frontend/web/uploads/anons/love-games-1492118439.jpg \",\n" +
+                    "      \"imgUrl\": \" http://gyumritheatre.am/demo/frontend/web/uploads/anons/love-games-1492118439.jpg\",\n" +
                     "      \"videoUrl\": \" BNIcteBdAcQ\"\n" +
                     "    },\n" +
                     "    {\n" +
@@ -88,7 +88,7 @@ public class JsonParser {
                     "      \"price\": \" 1000-2500\",\n" +
                     "      \"stage\": \" Big hall \",\n" +
                     "      \"date\": \" Mon Jul 24 18:30:00\",\n" +
-                    "      \"imgUrl\": \" https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-9/17992360_1592638510755652_6474898530030643607_n.jpg?oh=125de4d1eca23b52f0e6342c25553181&oe=59F4966B\",\n" +
+                    "      \"imgUrl\": \" http://gyumritheatre.am/demo/frontend/web/uploads/anons/evil-soul-1499124309.png\",\n" +
                     "      \"videoUrl\": \" BNIcteBdAcQ\"\n" +
                     "    }\n" +
                     "  ]\n" +
