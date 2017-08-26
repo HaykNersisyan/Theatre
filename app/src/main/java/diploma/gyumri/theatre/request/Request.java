@@ -53,17 +53,5 @@ public class Request {
 
             }
         });
-//        ((MyApplication) activity.getApplication()).getApiService().login(user).enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse( Response<String> response) {
-//                Log.i("TAG", "onResponse: " + response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                Log.i("TAG", "onResponse: fail" + call.toString());
-//
-//            }
-//        });
     }
 }
