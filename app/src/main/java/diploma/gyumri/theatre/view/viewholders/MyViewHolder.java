@@ -2,7 +2,10 @@ package diploma.gyumri.theatre.view.viewholders;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -22,9 +25,14 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         image = (ImageView) itemView.findViewById(R.id.imgEvent);
     }
 
-    public void initData(Event event, Context context){
+    public void initData(Event event, Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int h = (display.getWidth() * 62) / 100;
 
-        Picasso.with(context).load(event.getImgUrl()).into(image);
+        Log.i("TAG", "initData: " + h);
+        Picasso.with(context).load(event.getImgUrl()).resize(image.getWidth(), h).into(image);
     }
+
 
 }

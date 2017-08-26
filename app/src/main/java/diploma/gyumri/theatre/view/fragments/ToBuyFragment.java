@@ -239,11 +239,10 @@ public class ToBuyFragment extends Fragment {
 
     @OnTouch(R.id.hallView)
     boolean onTouch(View v, MotionEvent event) {
-
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            sX = event.getX();
-            sY = event.getY();
-
+            sX = (int) event.getX();
+            sY = (int) event.getY();
+//            scrollView.setNestedScrollingEnabled(false);
             if (hallView.getTickets() == null) {
                 return false;
             }
@@ -274,9 +273,8 @@ public class ToBuyFragment extends Fragment {
 
 
                 Log.i("Tag", "Action Move ");
-                mX = event.getX() - sX;
-                mY = event.getY() - sY;
-
+                mX = ((int) event.getX()) - sX;
+                mY = ((int) event.getY()) - sY;
 
 
                 hallView.setX(mX);
