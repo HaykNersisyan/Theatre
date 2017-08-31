@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/background"
-              android:gravity="center"
-              android:orientation="vertical"
-              tools:context="diploma.gyumri.theatre.view.fragments.ToBuyFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="diploma.gyumri.theatre.view.fragments.ToBuyFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -16,8 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/eventTitleHall"
@@ -28,26 +27,44 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <diploma.gyumri.theatre.view.HallView
                 android:id="@+id/hallView"
                 android:layout_width="match_parent"
+                android:background="@drawable/layout_zoom_background"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                />
-
-            <Button
-                android:id="@+id/zoomIn"
+                android:layout_weight="1" />
+            <!--<View-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"/>-->
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/layout_zoom_background"
+                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"/>
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/zoomOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"/>
+                <ImageButton
+                    android:id="@+id/zoomIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zoom_in" />
+                <View
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <ImageButton
+                    android:id="@+id/zoomOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/zoom_out" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/tickets_list_desc"
@@ -65,7 +82,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/row"
-                    android:textColor="@color/textColor"/>
+                    android:textColor="@color/textColor" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -73,7 +90,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/seat"
-                    android:textColor="@color/textColor"/>
+                    android:textColor="@color/textColor" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -81,7 +98,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/price"
-                    android:textColor="@color/textColor"/>
+                    android:textColor="@color/textColor" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -89,13 +106,12 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/remove"
-                    android:textColor="@color/textColor"/>
+                    android:textColor="@color/textColor" />
             </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/tickets_list"
@@ -112,7 +128,7 @@
                 android:layout_gravity="center"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

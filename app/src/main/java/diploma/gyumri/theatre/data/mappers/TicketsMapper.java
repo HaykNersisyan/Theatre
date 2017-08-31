@@ -18,7 +18,6 @@ public class TicketsMapper {
         for (int i = 0; i < arrLength; i++) {
             int size = ticketsDTO.getTickets()[i].getTicketsSeat().size();
             ticketner[i] = new ArrayList<>(size);
-
             for (int j = 0; j < size; j++) {
                 ticketner[i].add(initTicket(ticketsDTO.getTickets()[i].getTicketsSeat().get(j)));
             }
@@ -32,17 +31,17 @@ public class TicketsMapper {
         ticket.setPrice(ticketDTO.getPrice());
         ticket.setRow(ticketDTO.getRow());
         ticket.setSeat(ticketDTO.getSeat());
-        if (ticketDTO.getState().equals("available")) {
-            ticket.setState(Ticket.State.AVAILABLE);
-        } else if (ticketDTO.getState().equals("saled")) {
-            ticket.setState(Ticket.State.SOLD);
-        } else if (ticketDTO.getState().equals("reserved")) {
-            ticket.setState(Ticket.State.RESERVED);
+        switch (ticketDTO.getState()) {
+            case "available":
+                ticket.setState(Ticket.State.AVAILABLE);
+                break;
+            case "saled":
+                ticket.setState(Ticket.State.SOLD);
+                break;
+            case "reserved":
+                ticket.setState(Ticket.State.RESERVED);
+                break;
         }
         return ticket;
     }
 }
-
-
-
-

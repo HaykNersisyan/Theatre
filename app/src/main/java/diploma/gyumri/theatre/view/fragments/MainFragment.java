@@ -42,7 +42,6 @@ public class MainFragment extends Fragment {
         List<Event> events = JsonParser.getEventList(getActivity());
         listInit(events);
 //        Request.requestEvents((MainActivity) getActivity(),this);
-
     }
 
     public void listInit(List<Event> events) {
