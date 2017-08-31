@@ -79,7 +79,7 @@ public class ToBuyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        headers.forceNew = true;
-//        headers.query = "token=" + "asdasghdsadkasdkk546asd";
+        headers.query = "token=" + "asdasghdsadkasdkk546asd";
 
     }
 
@@ -119,6 +119,7 @@ public class ToBuyFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
+        scrollView.setEnabled(false);
         hallView.setLayoutParams(new LinearLayout.LayoutParams(i, i));
         selectedTicketsDescription.setVisibility(View.GONE);
 
@@ -180,7 +181,7 @@ public class ToBuyFragment extends Fragment {
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
 
-                    hallView.invalidate();
+//                    hallView.invalidate();
 
                     Log.i("Tag", "Action Drag Ended");
                 default:
@@ -239,10 +240,13 @@ public class ToBuyFragment extends Fragment {
 
     @OnTouch(R.id.hallView)
     boolean onTouch(View v, MotionEvent event) {
+//        if (event.getAction() == MotionEvent.ACTION_BUTTON_PRESS) {
+//            scrollView.setNestedScrollingEnabled(false);
+//        }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             sX = (int) event.getX();
             sY = (int) event.getY();
-//            scrollView.setNestedScrollingEnabled(false);
+
             if (hallView.getTickets() == null) {
                 return false;
             }

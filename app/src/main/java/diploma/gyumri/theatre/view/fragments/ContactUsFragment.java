@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tuanchauict.intentchooser.SharePlainTextChooserMaker;
+import com.tuanchauict.intentchooser.sharetext.EmailChooser;
+import com.tuanchauict.intentchooser.sharetext.FacebookChooser;
+import com.tuanchauict.intentchooser.sharetext.FacebookMessengerChooser;
+import com.tuanchauict.intentchooser.sharetext.GooglePlusChooser;
+import com.tuanchauict.intentchooser.sharetext.SMSChooser;
+import com.tuanchauict.intentchooser.sharetext.TwitterChooser;
+import com.tuanchauict.intentchooser.sharetext.UniversalChooser;
+import com.tuanchauict.intentchooser.sharetext.ViberChooser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,11 +60,17 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
     private Unbinder unbinder;
     private AlertDialog.Builder alertDialog;
     @BindView(R.id.call)
-    TextView call;
+    LinearLayout call;
     @BindView(R.id.site)
-    TextView site;
+    LinearLayout site;
     @BindView(R.id.email)
-    TextView email;
+    LinearLayout email;
+    @BindView(R.id.phoneNumber)
+    TextView phoneNumber;
+    @BindView(R.id.emailAdress)
+    TextView emailAdress;
+    @BindView(R.id.siteURL)
+    TextView siteURL;
 
     public ContactUsFragment() {
         // Required empty public constructor
@@ -75,7 +91,8 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle(call.getText().toString().trim());
+
+        alertDialog.setTitle(phoneNumber.getText().toString().trim());
         alertDialog.setCancelable(true);
         if (map == null) {
             ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
@@ -113,11 +130,11 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
                 }
                 break;
             case R.id.call:
-                call();
+                call_action();
                 break;
             case R.id.site:
                 Intent intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra("url", site.getText().toString());
+                intent.putExtra("url", siteURL.getText().toString());
                 startActivity(intent);
                 break;
             case R.id.email:
@@ -138,21 +155,20 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public  boolean isPermissionGranted() {
+    public boolean isPermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (getActivity().checkSelfPermission(android.Manifest.permission.CALL_PHONE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v("TAG","Permission is granted");
+                Log.v("TAG", "Permission is granted");
                 return true;
             } else {
 
-                Log.v("TAG","Permission is revoked");
+                Log.v("TAG", "Permission is revoked");
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
                 return false;
             }
-        }
-        else {
-            Log.v("TAG","Permission is granted");
+        } else {
+            Log.v("TAG", "Permission is granted");
             return true;
         }
     }
@@ -175,35 +191,18 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void call_action(){
-        String phnum = call.getText().toString();
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + phnum));
-        startActivity(callIntent);
+    public void call_action() {
+        String phnum = phoneNumber.getText().toString().trim();
+        Intent i = new Intent(Intent.ACTION_DIAL);
+        i.setData(Uri.parse("tel:" + phnum));
+        startActivity(Intent.createChooser(i, "Zangel"));
     }
 
-    private void call() {
-        alertDialog.setPositiveButton("Զանգահարել", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (isPermissionGranted()){
-                    call_action();
-                }
-            }
-        });
-        alertDialog.setNegativeButton("Չեղարկել", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertDialog.create().show();
-    }
 
     private void email() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("plain/text");
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{email.getText().toString()});
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAdress.getText().toString()});
         try {
             startActivity(Intent.createChooser(i, "Ուղղարկել նամակ..."));
         } catch (android.content.ActivityNotFoundException ex) {

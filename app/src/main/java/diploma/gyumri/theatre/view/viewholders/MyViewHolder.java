@@ -1,6 +1,8 @@
 package diploma.gyumri.theatre.view.viewholders;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
@@ -26,9 +28,13 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void initData(Event event, Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int h = (display.getWidth() * 62) / 100;
+//        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point size = new Point();
+//        Display display = wm.getDefaultDisplay();
+//        display.getSize(size);
+        ((Activity)context).getWindowManager().getDefaultDisplay().getSize(size);
+
+        int h = (size.x * 62) / 100;
 
         Log.i("TAG", "initData: " + h);
         Picasso.with(context).load(event.getImgUrl()).resize(image.getWidth(), h).into(image);
