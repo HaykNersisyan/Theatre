@@ -35,7 +35,7 @@ public class Ticket {
         this.price = price;
     }
 
-    public Ticket(){
+    public Ticket() {
 
     }
 
@@ -79,7 +79,6 @@ public class Ticket {
     }
 
 
-
     public Ticket(int row, int seat, int id, int price, int color) {
         this.row = row;
         this.seat = seat;
@@ -97,16 +96,16 @@ public class Ticket {
         this.canvas = canvas;
         switch (state) {
             case AVAILABLE:
-                p.setColor(Color.RED);
+                p.setColor(Color.rgb(179, 22, 30));
                 break;
             case SOLD:
                 p.setColor(Color.BLACK);
                 break;
             case RESERVED:
-                p.setColor(Color.YELLOW);
+                p.setColor(Color.rgb(255, 170, 15));
                 break;
             case SELECTED:
-                p.setColor(Color.BLUE);
+                p.setColor(Color.rgb(49, 148, 23));
         }
         canvas.drawCircle(cX, cY, radius, p);
     }

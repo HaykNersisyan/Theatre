@@ -2,6 +2,9 @@ package diploma.gyumri.theatre.request;
 
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import diploma.gyumri.theatre.MyApplication;
@@ -39,17 +42,21 @@ public class Request {
     }
 
 
-    public static void login(final LoginActivity activity, UserResponseDTO user) {
-        Call<UserResponseDTO> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
-        call.enqueue(new Callback<UserResponseDTO>() {
+    public static void login(final LoginActivity activity, JSONObject user) {
+        Log.i("TAG", "mtneluc: ");
+
+        Call<JSONObject> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
+        call.enqueue(new Callback<JSONObject>() {
             @Override
-            public void onResponse(Call<UserResponseDTO> call, Response<UserResponseDTO> response) {
-                response.raw();
-                Log.i("TAG", "onResponse: " + response.body().getToken());
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+
+                Log.i("TAG", "onResponse: " + response.body());
+
             }
 
             @Override
-            public void onFailure(Call<UserResponseDTO> call, Throwable t) {
+            public void onFailure(Call<JSONObject> call, Throwable t) {
+                Log.i("TAG", "onFail: ");
 
             }
         });

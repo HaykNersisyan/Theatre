@@ -1,5 +1,7 @@
 package diploma.gyumri.theatre.net;
 
+import org.json.JSONObject;
+
 import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.data.dto.EventsDTO;
 import diploma.gyumri.theatre.data.dto.UserResponseDTO;
@@ -18,5 +20,5 @@ public interface APIService {
 
 //    @Headers({"Content-type:aplication/json"})
     @POST(Constants.BASE_URL+"login")
-    Call<UserResponseDTO> login(@Body UserResponseDTO user);
+    Call<JSONObject> login(@Body JSONObject user);
 }
