@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -65,6 +66,8 @@ public class ToBuyFragment extends Fragment {
     TextView eventTitle;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
 
     private IO.Options headers = new IO.Options();
@@ -105,6 +108,7 @@ public class ToBuyFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressBar.setVisibility(View.GONE);
                         hallView.invalidate();
                     }
                 });

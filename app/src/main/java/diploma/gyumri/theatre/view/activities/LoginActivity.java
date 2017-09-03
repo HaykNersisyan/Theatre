@@ -2,7 +2,11 @@ package diploma.gyumri.theatre.view.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 
@@ -36,7 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         UserResponseDTO user = new UserResponseDTO();
         user.setLogin(loginUser.getText().toString());
         user.setPassword(passwordUser.getText().toString());
-        Request.login(this, user);
+        Log.i("TAG", "onClick: " + user.toString());
+
+        try {
+            Request.login(this, new JSONObject(user.toString()));
+            Log.i("TAG", "JSON: " + new JSONObject(user.toString()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
 //            }
 //        }
     }

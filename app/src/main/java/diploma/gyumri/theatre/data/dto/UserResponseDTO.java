@@ -11,10 +11,14 @@ import lombok.Data;
 
 @Data
 public class UserResponseDTO {
-
-    @SerializedName("token")
-    String token;
     String login;
     String password;
 
+    @Override
+    public String toString() {
+        String str =  "{" + "\"login\":" +'\"' + login + '\"' +
+                ", \"password\":" +'\"' + password + '\"' +
+                '}';
+        return str.replaceAll("\n", "\\n");
+    }
 }
