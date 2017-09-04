@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Objects;
 
 import diploma.gyumri.theatre.MyApplication;
 import diploma.gyumri.theatre.data.dto.EventsDTO;
@@ -42,20 +43,24 @@ public class Request {
     }
 
 
-    public static void login(final LoginActivity activity, JSONObject user) {
+    public static void login(final LoginActivity activity, Object user) {
         Log.i("TAG", "mtneluc: ");
 
-        Call<JSONObject> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
-        call.enqueue(new Callback<JSONObject>() {
+        Call<Object> call = ((MyApplication) activity.getApplication()).getApiService().login(user);
+        call.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+            public void onResponse(Call<Object> call, Response<Object> response) {
 
-                Log.i("TAG", "onResponse: " + response.body());
+                try {
+                    Log.i("TAG", "onResponse: "+((JSONObject) response.body()).getString("token"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 
             @Override
-            public void onFailure(Call<JSONObject> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
                 Log.i("TAG", "onFail: ");
 
             }
