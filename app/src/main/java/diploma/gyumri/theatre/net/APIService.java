@@ -15,10 +15,10 @@ import retrofit2.http.POST;
  */
 
 public interface APIService {
-    @GET(Constants.BASE_URL+"events/list")
+    @GET(Constants.BASE_URL + "events/list")
     Call<EventsDTO> getEvents();
 
-//    @Headers({"Content-type:aplication/json"})
-    @POST(Constants.BASE_URL+"login")
-    Call<JSONObject> login(@Body JSONObject user);
+    //    @Headers({"Content-type:aplication/json"})
+    @POST(Constants.BASE_URL + "login")
+    Call<Object> login(@Body Object user);
 }

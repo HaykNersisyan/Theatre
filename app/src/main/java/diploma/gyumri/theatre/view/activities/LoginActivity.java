@@ -40,15 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         UserResponseDTO user = new UserResponseDTO();
         user.setLogin(loginUser.getText().toString());
         user.setPassword(passwordUser.getText().toString());
-        Log.i("TAG", "onClick: " + user.toString());
 
-        try {
-            Request.login(this, new JSONObject(user.toString()));
-            Log.i("TAG", "JSON: " + new JSONObject(user.toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
+            Request.login(this, user);
 
-        }
 //            }
 //        }
     }

@@ -75,7 +75,7 @@ public class EventFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
         unbinder = ButterKnife.bind(this, rootView);
-        eventDate.setText(mEvent.getDate());
+        eventDate.setText(mEvent.getDate().toString());
 
         playerContainer.setVisibility(View.VISIBLE);
         youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
