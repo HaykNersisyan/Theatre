@@ -8,7 +8,7 @@
     tools:context="diploma.gyumri.theatre.view.fragments.ToBuyFragment">
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -62,14 +62,14 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="15dp">
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -77,11 +77,10 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            >
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -96,12 +95,12 @@
                                     android:background="@drawable/ticet_desc_sold" />
 
                                 <TextView
-                                    android:textSize="12sp"
                                     android:id="@+id/textView5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:text="@string/ticket_sold" />
+                                    android:text="@string/ticket_sold"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -119,27 +118,27 @@
 
                                 <TextView
                                     android:id="@+id/textView6"
-                                    android:textSize="12sp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:text="@string/ticket_reserved" />
+                                    android:text="@string/ticket_reserved"
+                                    android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="10dp">
 
@@ -150,11 +149,11 @@
 
                                 <TextView
                                     android:id="@+id/textView4"
-                                    android:textSize="12sp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:text="@string/ticket_avalable" />
+                                    android:text="@string/ticket_avalable"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -173,11 +172,11 @@
                                     android:background="@drawable/ticet_desc_selected" />
 
                                 <TextView
-                                    android:textSize="12sp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:text="@string/ticket_selected" />
+                                    android:text="@string/ticket_selected"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -186,11 +185,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_weight="0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
+                    android:layout_weight="0"
                     android:background="@drawable/layout_zoom_background"
                     android:orientation="vertical">
 
@@ -276,6 +275,16 @@
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
                 android:textAlignment="center" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button"
+                android:text="@string/buy"
+                android:textColor="@color/textColor" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

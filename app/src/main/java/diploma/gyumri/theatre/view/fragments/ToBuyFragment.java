@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,10 +65,12 @@ public class ToBuyFragment extends Fragment {
     TextView selectedTicketsDescription;
     @BindView(R.id.eventTitleHall)
     TextView eventTitle;
-    @BindView(R.id.scrollView)
+    @BindView(R.id.nestedScrollView)
     NestedScrollView scrollView;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.buy)
+    Button buyButton;
 
 
     private IO.Options headers = new IO.Options();
@@ -114,8 +117,6 @@ public class ToBuyFragment extends Fragment {
                 });
             }
         });
-
-
         eventTitle.setText(event.getName());
         int i = getActivity().getWindowManager().getDefaultDisplay().getWidth();
         ticketsListDescription.setVisibility(View.GONE);
@@ -220,7 +221,7 @@ public class ToBuyFragment extends Fragment {
         mSocket.disconnect();
     }
 
-    @OnClick({R.id.zoomIn, R.id.zoomOut})
+    @OnClick({R.id.zoomIn, R.id.zoomOut,R.id.buy})
     void zoom(View view) {
         switch (view.getId()) {
             case R.id.zoomIn:
@@ -237,6 +238,7 @@ public class ToBuyFragment extends Fragment {
                     isZoomed = false;
                 }
                 break;
+            case R.id.buy:
         }
 
     }
@@ -260,6 +262,7 @@ public class ToBuyFragment extends Fragment {
                     if (ticketList == null) {
                         ticketList = new ArrayList<>();
                     }
+                    buyButton.setVisibility(View.VISIBLE);
                     ticketsListDescription.setVisibility(View.VISIBLE);
                     ticketList.add(ticket);
                     recyclerViewSetAdapter(ticket, Ticket.State.SELECTED);
@@ -313,6 +316,7 @@ public class ToBuyFragment extends Fragment {
         ticketList.remove(position);
         if (ticketList.size() == 0) {
             selectedTicketsDescription.setVisibility(View.GONE);
+            buyButton.setVisibility(View.GONE);
             ticketsListDescription.setVisibility(View.GONE);
         } else {
             selectedTicketsDescription();

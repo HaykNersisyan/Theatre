@@ -4,14 +4,16 @@ import android.widget.EditText;
 
 import butterknife.BindView;
 import diploma.gyumri.theatre.R;
+import io.realm.RealmObject;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Created by Hayk on 03.08.2017.
  */
 
 @Data
-public class User {
+public class User extends RealmObject {
     private String login;
     private String password;
     private String confirmPassword;
@@ -19,6 +21,11 @@ public class User {
     private String surName;
     private String phone;
     private String email;
+    private String token;
+
+    public User() {
+
+    }
 
     public User(String login, String password, String confirmPassword,
                 String name, String surName, String phone, String email) {
@@ -29,6 +36,18 @@ public class User {
         this.surName = surName;
         this.phone = phone;
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", surName='" + surName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }
 

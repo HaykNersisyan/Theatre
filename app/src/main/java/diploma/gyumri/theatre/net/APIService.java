@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.data.dto.EventsDTO;
+import diploma.gyumri.theatre.data.dto.UserDTO;
 import diploma.gyumri.theatre.data.dto.UserResponseDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,5 +21,5 @@ public interface APIService {
 
     //    @Headers({"Content-type:aplication/json"})
     @POST(Constants.BASE_URL + "login")
-    Call<Object> login(@Body Object user);
+    Call<UserDTO> login(@Body UserDTO user);
 }

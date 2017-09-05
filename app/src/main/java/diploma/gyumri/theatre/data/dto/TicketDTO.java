@@ -11,7 +11,7 @@ import lombok.Data;
 public class TicketDTO {
 
     @SerializedName("state")
-    String state;
+    private  String state;
 
 
 

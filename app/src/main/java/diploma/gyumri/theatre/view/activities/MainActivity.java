@@ -2,7 +2,9 @@ package diploma.gyumri.theatre.view.activities;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
@@ -11,26 +13,42 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import diploma.gyumri.theatre.R;
+import diploma.gyumri.theatre.constants.Constants;
+import diploma.gyumri.theatre.model.User;
 import diploma.gyumri.theatre.view.fragments.ContactUsFragment;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
 import diploma.gyumri.theatre.view.service.MyService;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
     private Button regBtn;
     private Button loginButton;
+    private LinearLayout loginnedLayout;
+    private TextView userName;
+    private TextView userSurname;
+    private LinearLayout un;
+    private MenuItem logOut;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -58,16 +76,16 @@ public class MainActivity extends AppCompatActivity
                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
                         return false;
-                     case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_CANCEL:
                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
                         Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
                         return false;
-                     case MotionEvent.ACTION_UP:
-                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
-                         Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
-                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
-                         return false;
+                    case MotionEvent.ACTION_UP:
+                        ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                        Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
+                        ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                        return false;
                 }
                 return false;
             }
@@ -82,7 +100,28 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-//    private void abdul(){
+    @Override
+    protected void onResume() {
+        un = (LinearLayout) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.unlogin_header);
+        loginnedLayout = (LinearLayout) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.logined_header);
+
+        if (Constants.USER != null){
+            un.setVisibility(View.GONE);
+            loginnedLayout.setVisibility(View.VISIBLE);
+            userName =(TextView) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_name);
+            userName.setVisibility(View.VISIBLE);
+            userName.setText(Constants.USER.getName());
+            userSurname = (TextView) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_surname);
+            userSurname.setVisibility(View.VISIBLE);
+            userSurname.setText(Constants.USER.getSurName());
+            Log.i("TAGIK", "onResume: ." + Constants.USER.getToken());
+        }else{
+            un.setVisibility(View.VISIBLE);
+            loginnedLayout.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
+    //    private void abdul(){
 //        Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
 //        startActivity(intent);
 //    }
@@ -156,7 +195,7 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("name", "Jane");
             intent.putExtra("time", 4);
             intent.putExtra("pending", pendingIntent);
-            startService(intent);
+
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -164,8 +203,19 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new ContactUsFragment(), "map")
                     .commit();
+        } else if (id == R.id.log_out){
+            Realm  realm = Realm.getDefaultInstance();
+            RealmResults<User> drugses = realm.where(User.class).findAll();
+            realm.beginTransaction();
+            drugses.deleteAllFromRealm();
+            realm.commitTransaction();
+            Constants.USER = null;
+            un.setVisibility(View.VISIBLE);
+            loginnedLayout.setVisibility(View.GONE);
+            item.setVisible(false);
+            logOut.setVisible(true);
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
@@ -186,5 +236,13 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        logOut = menu.findItem(R.id.log_out);
+        return super.onCreateOptionsMenu(menu);
+
     }
 }

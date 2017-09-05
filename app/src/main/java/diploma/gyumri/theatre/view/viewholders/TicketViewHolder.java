@@ -12,11 +12,12 @@ import diploma.gyumri.theatre.model.Ticket;
  * Created by Hayk on 19.08.2017.
  */
 
-public class TicketViewHolder  extends RecyclerView.ViewHolder {
+public class TicketViewHolder extends RecyclerView.ViewHolder {
     TextView price;
     TextView row;
     TextView seat;
     public ImageButton delet;
+
     public TicketViewHolder(View itemView) {
         super(itemView);
         this.price = (TextView) itemView.findViewById(R.id.ticket_price);
@@ -24,9 +25,10 @@ public class TicketViewHolder  extends RecyclerView.ViewHolder {
         this.seat = (TextView) itemView.findViewById(R.id.ticket_send);
         this.delet = (ImageButton) itemView.findViewById(R.id.ticket_delet);
     }
-    public void initData(Ticket ticket){
-        price.setText(""+ticket.getPrice());
-        row.setText(""+ticket.getRow());
-        seat.setText(""+ticket.getSeat());
+
+    public void initData(Ticket ticket) {
+        price.setText("" + ticket.getPrice());
+        row.setText("" + ticket.getRow());
+        seat.setText("" + ticket.getSeat());
     }
 }

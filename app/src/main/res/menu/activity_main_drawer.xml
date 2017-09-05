@@ -18,6 +18,11 @@
             android:id="@+id/contact_us"
             android:icon="@drawable/contact_us_icon"
             android:title="@string/contact_us"/>
+        <item
+            android:id="@+id/log_out"
+            android:icon="@drawable/contact_us_icon"
+            android:title="Log_Out"
+            android:visible="true"/>
     </group>
 
 </menu>
