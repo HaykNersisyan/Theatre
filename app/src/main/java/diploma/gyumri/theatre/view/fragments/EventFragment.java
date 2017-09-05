@@ -27,13 +27,13 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
+import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.model.Event;
 import diploma.gyumri.theatre.view.presenter.listeners.YouTubePlayerStateChangeListener;
 
 public class EventFragment extends Fragment {
     private YouTubePlayer YPlayer;
     private Event mEvent;
-    private static final String YoutubeDeveloperKey = "AIzaSyDjeZH1klcMNqIHs5PTrw55bNJj5HkMXF8";
     private YouTubePlayerSupportFragment youTubePlayerFragment;
     private boolean notVideo;
     private Unbinder unbinder;
@@ -88,7 +88,7 @@ public class EventFragment extends Fragment {
         } else {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.playerContainer, youTubePlayerFragment).commit();
-            youTubePlayerFragment.initialize(YoutubeDeveloperKey, new OnInitializedListener() {
+            youTubePlayerFragment.initialize(Constants.YoutubeDeveloperKey, new OnInitializedListener() {
 
                 @Override
                 public void onInitializationSuccess(Provider arg0, YouTubePlayer youTubePlayer, boolean b) {

@@ -2,6 +2,9 @@ package diploma.gyumri.theatre.constants;
 
 import java.util.regex.Pattern;
 
+import diploma.gyumri.theatre.model.User;
+import diploma.gyumri.theatre.view.activities.MainActivity;
+
 /**
  * Created by root on 7/30/17.
  */
@@ -15,4 +18,6 @@ public class Constants {
     public static final Pattern VALID_PHONE_REGEX = Pattern.compile("^[0-9\\-]{8,13}$\n");
     public static String FACEBOOK_URL = "https://www.facebook.com/gyumritheatre";
     public static String FACEBOOK_PAGE_ID = "1163153797037461";
+    public static final String YoutubeDeveloperKey = "AIzaSyDjeZH1klcMNqIHs5PTrw55bNJj5HkMXF8";
+    public static User USER;
 }

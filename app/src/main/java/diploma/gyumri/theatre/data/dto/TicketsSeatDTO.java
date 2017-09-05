@@ -12,5 +12,5 @@ import lombok.Data;
 @Data
 public class TicketsSeatDTO {
     @SerializedName("seats")
-    List<TicketDTO> ticketsSeat;
+    private List<TicketDTO> ticketsSeat;
 }

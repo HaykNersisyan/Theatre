@@ -33,4 +33,5 @@
     <string name="ticket_sold">Վաճառված է</string>
     <string name="ticket_selected">Ընտրված է</string>
     <string name="ticket_avalable">Առկա է</string>
+    <string name="buy">Գնել</string>
 </resources>

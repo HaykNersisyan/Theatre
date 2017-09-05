@@ -1,7 +1,8 @@
 package diploma.gyumri.theatre;
 
 import android.app.Application;
-
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.net.APIService;
 import retrofit2.Retrofit;
@@ -30,5 +31,8 @@ public class MyApplication extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = myRetrofit.create(APIService.class);
+        Realm.init(this);
+        RealmConfiguration configuration = new RealmConfiguration.Builder().build();
+        Realm.setDefaultConfiguration(configuration);
     }
 }
