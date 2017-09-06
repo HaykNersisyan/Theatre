@@ -4,7 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,8 +48,24 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         unbinder = ButterKnife.bind(this);
+        email.addTextChangedListener(tw);
 
     }
+    private TextWatcher tw = new TextWatcher() {
+        public void afterTextChanged(Editable s){
+
+        }
+        public void  beforeTextChanged(CharSequence s, int start, int count, int after){
+            // you can check for enter key here
+        }
+        public void  onTextChanged (CharSequence s, int start, int before,int count) {
+            if (validateEmail(s)){
+                email.setError(null);
+            }else {
+                email.setError("sxal email");
+            }
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -85,25 +106,24 @@ public class RegistrationActivity extends AppCompatActivity {
             if (!validePassword(password.getText().toString())) {
                 Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
             } else {
-//                Request.register(this, userCreate());
+                Request.register(this, userCreate());
             }
 
         } else {
             Toast.makeText(this, "lracreq bolor dashter@", Toast.LENGTH_SHORT).show();
 
-
         }
     }
 
-
     private User userCreate() {
-        String login = this.login.toString().trim();
-        String password = this.password.toString().trim();
-        String confirmPassword = this.confirmPassword.toString().trim();
-        String name = this.name.toString().trim();
-        String surName = this.surName.toString().trim();
-        String phone = this.phone.toString().trim();
-        String email = this.email.toString().trim();
+        String login = this.login.getText().toString().trim();
+        String password = this.password.getText().toString().trim();
+        String confirmPassword = this.confirmPassword.getText().toString().trim();
+        String name = this.name.getText().toString().trim();
+        String surName = this.surName.getText().toString().trim();
+        String phone = "+374" + this.phone.getText().toString().trim();
+        String email = this.email.getText().toString().trim();
+        Log.i("TAGUHI", "userCreate: " + surName);
         return new User(login, password, confirmPassword, name, surName, phone, email);
     }
 
@@ -118,7 +138,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    private boolean validateEmail(String emailStr) {
+    private boolean validateEmail(CharSequence emailStr) {
         Matcher matcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }

@@ -2,9 +2,7 @@ package diploma.gyumri.theatre.view.activities;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
@@ -22,8 +20,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
@@ -63,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        logOut = navigationView.getMenu().findItem(R.id.log_out);
         regBtn = (Button) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.mainRegBtn);
         getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.newInstance(getSupportFragmentManager()), "MainFragment").commit();
         regBtn.setOnClickListener(this);
@@ -102,20 +99,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
+        Log.i("in", "onCreateOptionsMenu: "+logOut );
         un = (LinearLayout) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.unlogin_header);
         loginnedLayout = (LinearLayout) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.logined_header);
 
-        if (Constants.USER != null){
-            un.setVisibility(View.GONE);
+        if (Constants.USER != null) {
+            un.setVisibility(View.INVISIBLE);
             loginnedLayout.setVisibility(View.VISIBLE);
-            userName =(TextView) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_name);
+            userName = (TextView) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_name);
             userName.setVisibility(View.VISIBLE);
             userName.setText(Constants.USER.getName());
             userSurname = (TextView) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_surname);
             userSurname.setVisibility(View.VISIBLE);
-            userSurname.setText(Constants.USER.getSurName());
+            userSurname.setText(Constants.USER.getSurname());
+            logOut.setVisible(true);
             Log.i("TAGIK", "onResume: ." + Constants.USER.getToken());
-        }else{
+        } else {
+            logOut.setVisible(false);
+
             un.setVisibility(View.VISIBLE);
             loginnedLayout.setVisibility(View.GONE);
         }
@@ -203,8 +204,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new ContactUsFragment(), "map")
                     .commit();
-        } else if (id == R.id.log_out){
-            Realm  realm = Realm.getDefaultInstance();
+        } else if (id == R.id.log_out) {
+            Realm realm = Realm.getDefaultInstance();
             RealmResults<User> drugses = realm.where(User.class).findAll();
             realm.beginTransaction();
             drugses.deleteAllFromRealm();
@@ -212,10 +213,10 @@ public class MainActivity extends AppCompatActivity
             Constants.USER = null;
             un.setVisibility(View.VISIBLE);
             loginnedLayout.setVisibility(View.GONE);
-            item.setVisible(false);
-            logOut.setVisible(true);
+//            item.setVisible(false);
+            logOut.setVisible(false);
         }
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
@@ -237,12 +238,13 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
-        logOut = menu.findItem(R.id.log_out);
-        return super.onCreateOptionsMenu(menu);
-
-    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+//        super.onCreateOptionsMenu(menu);
+//        logOut = menu.findItem(R.id.log_out);
+//        Log.i("in", "onCreateOptionsMenu: "+logOut );
+//        return super.onCreateOptionsMenu(menu);
+//    }
 }

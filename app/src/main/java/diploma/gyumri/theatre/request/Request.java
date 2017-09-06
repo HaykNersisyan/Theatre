@@ -1,27 +1,20 @@
 package diploma.gyumri.theatre.request;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.List;
-import java.util.Objects;
 
 import diploma.gyumri.theatre.MyApplication;
 import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.data.dto.EventsDTO;
 import diploma.gyumri.theatre.data.dto.UserDTO;
-import diploma.gyumri.theatre.data.dto.UserResponseDTO;
 import diploma.gyumri.theatre.data.mappers.EventsMapper;
 import diploma.gyumri.theatre.data.mappers.UserMapper;
 import diploma.gyumri.theatre.model.Event;
 import diploma.gyumri.theatre.model.User;
 import diploma.gyumri.theatre.view.activities.LoginActivity;
 import diploma.gyumri.theatre.view.activities.MainActivity;
+import diploma.gyumri.theatre.view.activities.RegistrationActivity;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
 import io.realm.Realm;
 import retrofit2.Call;
@@ -72,6 +65,23 @@ public class Request {
         });
     }
 
+    public static void register(RegistrationActivity activity,User user){
+        Call<User> call = ((MyApplication)activity.getApplication()).getApiService().register(user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                Log.i("TAGUHI", "onResponse: tamame" + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
     private static void saveUser(final User user) {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -79,7 +89,7 @@ public class Request {
             public void execute(Realm realm) {
                 User rUser = realm.createObject(User.class);
                 rUser.setLogin(user.getLogin());
-                rUser.setSurName(user.getSurName());
+                rUser.setSurname(user.getSurname());
                 rUser.setName(user.getName());
                 rUser.setToken(user.getToken());
                 rUser.setEmail(user.getEmail());
