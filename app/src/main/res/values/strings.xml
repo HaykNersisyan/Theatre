@@ -34,4 +34,5 @@
     <string name="ticket_selected">Ընտրված է</string>
     <string name="ticket_avalable">Առկա է</string>
     <string name="buy">Գնել</string>
+    <string name="log_out">Դուրս գալ</string>
 </resources>

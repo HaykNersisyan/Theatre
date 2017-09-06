@@ -12,55 +12,65 @@
 
         android:layout_height="200dp"
         android:layout_marginTop="60dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/maskkkk" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+     <LinearLayout
+         android:gravity="center"
+         android:layout_centerInParent="true"
+         android:id="@+id/logined_header"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/logined_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+         <TextView
+             android:textStyle="bold"
+             android:textSize="18sp"
+             android:id="@+id/user_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+         <TextView
+             android:textSize="18sp"
+             android:textStyle="bold"
+             android:layout_marginLeft="20dp"
+             android:id="@+id/user_surname"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+     </LinearLayout>
 
-        <TextView
-            android:id="@+id/user_surname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+     <LinearLayout
+         android:layout_centerInParent="true"
+         android:id="@+id/unlogin_header"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:gravity="center">
 
-    <LinearLayout
-        android:id="@+id/unlogin_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+         <Button
+             android:id="@+id/mainLoginButton"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="20dp"
+             android:layout_marginRight="20dp"
+             android:layout_marginTop="10dp"
+             android:background="@drawable/button"
+             android:text="@string/log_in"
+             android:textColor="@color/textColor" />
 
-        <Button
-            android:id="@+id/mainLoginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button"
-            android:text="@string/log_in"
-            android:textColor="@color/textColor" />
+         <Button
+             android:id="@+id/mainRegBtn"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="20dp"
+             android:layout_marginTop="10dp"
+             android:background="@drawable/button"
+             android:text="@string/register"
+             android:textColor="@color/textColor" />
+     </LinearLayout>
+ </RelativeLayout>
 
-        <Button
-            android:id="@+id/mainRegBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button"
-            android:text="@string/register"
-            android:textColor="@color/textColor" />
-    </LinearLayout>
+
 </LinearLayout>
 
 
