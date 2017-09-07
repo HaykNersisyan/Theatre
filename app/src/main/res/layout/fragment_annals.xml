@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context="diploma.gyumri.theatre.view.fragments.AnnalsFragment">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/history_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="asdasdasd" />
+
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:padding="16dp"
+                android:layout_below="@id/history_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/taregrutyun" />
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

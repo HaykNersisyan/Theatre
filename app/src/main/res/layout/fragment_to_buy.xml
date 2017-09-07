@@ -185,16 +185,20 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
                     android:layout_weight="0"
+
                     android:background="@drawable/layout_zoom_background"
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:padding="10dp"
                         android:id="@+id/zoomIn"
+                        android:background="@drawable/ripple_effect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/zoom_in" />
@@ -205,6 +209,8 @@
                         android:background="@color/colorPrimary" />
 
                     <ImageButton
+                        android:padding="10dp"
+                        android:background="@drawable/ripple_effect"
                         android:id="@+id/zoomOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -277,14 +283,14 @@
                 android:textAlignment="center" />
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/button"
                 android:text="@string/buy"
-                android:textColor="@color/textColor" />
+                android:textColor="@color/textColor"
+                android:visibility="gone" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

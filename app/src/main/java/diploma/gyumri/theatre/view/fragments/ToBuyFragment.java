@@ -117,10 +117,11 @@ public class ToBuyFragment extends Fragment {
                 });
             }
         });
+        ticketList = new ArrayList<>();
         eventTitle.setText(event.getName());
         int i = getActivity().getWindowManager().getDefaultDisplay().getWidth();
         ticketsListDescription.setVisibility(View.GONE);
-        adapter = new TicketsAdapter(getActivity(), new ArrayList<Ticket>(), this);
+        adapter = new TicketsAdapter(getActivity(), ticketList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(false);
@@ -221,7 +222,7 @@ public class ToBuyFragment extends Fragment {
         mSocket.disconnect();
     }
 
-    @OnClick({R.id.zoomIn, R.id.zoomOut,R.id.buy})
+    @OnClick({R.id.zoomIn, R.id.zoomOut, R.id.buy})
     void zoom(View view) {
         switch (view.getId()) {
             case R.id.zoomIn:
@@ -259,17 +260,14 @@ public class ToBuyFragment extends Fragment {
             Ticket ticket = hallView.select(event.getX(), event.getY());
             if (ticket != null) {
                 if (ticket.getState() == Ticket.State.AVAILABLE) {
-                    if (ticketList == null) {
-                        ticketList = new ArrayList<>();
-                    }
                     buyButton.setVisibility(View.VISIBLE);
                     ticketsListDescription.setVisibility(View.VISIBLE);
                     ticketList.add(ticket);
-                    recyclerViewSetAdapter(ticket, Ticket.State.SELECTED);
+                    recyclerViewDataChanged(ticket, Ticket.State.SELECTED);
                 } else if (ticket.getState() == Ticket.State.SELECTED) {
                     if (ticketList.indexOf(ticket) != -1) {
                         removeFromList(ticketList.indexOf(ticket));
-                        recyclerViewSetAdapter(ticket, Ticket.State.AVAILABLE);
+                        recyclerViewDataChanged(ticket, Ticket.State.AVAILABLE);
                     }
                 }
                 if (ticketList.size() != 0) {
@@ -300,9 +298,8 @@ public class ToBuyFragment extends Fragment {
         return false;
     }
 
-    private void recyclerViewSetAdapter(Ticket ticket, Ticket.State state) {
-        adapter = new TicketsAdapter(getActivity(), ticketList, this);
-        recyclerView.setAdapter(adapter);
+    private void recyclerViewDataChanged(Ticket ticket, Ticket.State state) {
+        adapter.notifyDataSetChanged();
         ticket.setState(state);
     }
 
@@ -321,8 +318,10 @@ public class ToBuyFragment extends Fragment {
         } else {
             selectedTicketsDescription();
         }
-        adapter = new TicketsAdapter(getActivity(), ticketList, this);
-        recyclerView.setAdapter(adapter);
+
+//        adapter = new TicketsAdapter(getActivity(), ticketList, this);
+//        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 
