@@ -21,9 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.model.User;
+import diploma.gyumri.theatre.view.fragments.AnnalsFragment;
 import diploma.gyumri.theatre.view.fragments.ContactUsFragment;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
 import diploma.gyumri.theatre.view.service.MyService;
@@ -196,10 +201,10 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("name", "Jane");
             intent.putExtra("time", 4);
             intent.putExtra("pending", pendingIntent);
-
-
         } else if (id == R.id.nav_slideshow) {
-
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new AnnalsFragment(), "annals")
+                    .commit();
         } else if (id == R.id.contact_us) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new ContactUsFragment(), "map")
