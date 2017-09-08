@@ -57,7 +57,7 @@ public class HallView extends View {
         Log.i("DDD", "setX: getWith" + getWidth());
         Log.i("DDD", "setX: XXXX" + X);
 
-        if (tickets[0].get(9).getcX() <= getWidth() / 2 - ((getWidth() / 11))/2) {
+        if (tickets[0].get(9).getcX() <= getWidth() / 2 - ((getWidth() / 11)) / 2) {
             if (x < 0) {
                 X = temp;
             }
@@ -162,6 +162,11 @@ public class HallView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
+
+        Paint p = new Paint();
+        p.setColor(getResources().getColor(R.color.colorPrimary));
+        p.setTextSize(20f);
+
         canvas.scale(scaleFactor, scaleFactor);
         if (tickets == null) {
             return;
@@ -171,6 +176,13 @@ public class HallView extends View {
 //        a = 50;
         radius = 0.4f * a;
         for (int j = tickets.length - 1; j >= 0; j--) {
+
+            float b = 0.07f * a;
+            x = (0.0f * a) + (a / 2) + X;
+            y = ((7 - j) * a + 0.5f * a) + (a / 2) + Y;
+            canvas.drawText(j + 1 + "", x - 3.5f * b, y + 2 * b, p);
+
+
             for (int i = 0; i < tickets[j].size(); i++) {
                 y = ((7 - j) * a + 0.5f * a) + (a / 2) + Y;
                 x = ((i) * a + 0.5f * a) + (a / 2) + X;
@@ -180,8 +192,11 @@ public class HallView extends View {
 ////                        tickets[j].get(i).state = Ticket.State.SOLD;
 //                    x = (6 + i) * a + 0.5f * a;
 //                }
-                tickets[j].get(i).draw(canvas, x, y, radius);
+                tickets[j].get(i).draw(canvas, x, y, radius, i + 1, a);
+
+
             }
+
         }
         paint.setColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
         canvas.drawRect(1f * a + (a / 2), 8.3f * a + (a / 2), 9f * a + (a / 2), 9.5f * a + a, paint);

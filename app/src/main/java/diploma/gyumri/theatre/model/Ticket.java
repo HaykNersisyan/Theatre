@@ -87,7 +87,7 @@ public class Ticket {
         this.color = color;
     }
 
-    public void draw(Canvas canvas, float cX, float cY, float radius) {
+    public void draw(Canvas canvas, float cX, float cY, float radius, int i, float a) {
 
 
         this.cX = cX;
@@ -96,7 +96,7 @@ public class Ticket {
         this.canvas = canvas;
         switch (state) {
             case AVAILABLE:
-                p.setColor(Color.rgb(179, 22, 30));
+                p.setColor(Color.rgb(49, 148, 23));
                 break;
             case SOLD:
                 p.setColor(Color.BLACK);
@@ -105,9 +105,17 @@ public class Ticket {
                 p.setColor(Color.rgb(255, 170, 15));
                 break;
             case SELECTED:
-                p.setColor(Color.rgb(49, 148, 23));
+                p.setColor(Color.rgb(179, 22, 30));
         }
         canvas.drawCircle(cX, cY, radius, p);
+        p.setColor(Color.WHITE);
+        float b = 0.07f * a;
+        if (i < 10){
+            canvas.drawText(i + "", cX - b, cY + b, p);
+        } else {
+            canvas.drawText(i + "", cX - 2 * b, cY + b, p);
+        }
+
     }
 
     public static boolean isSelected = false;

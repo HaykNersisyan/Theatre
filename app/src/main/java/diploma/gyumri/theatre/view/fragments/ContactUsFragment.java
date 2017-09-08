@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tuanchauict.intentchooser.SharePlainTextChooserMaker;
@@ -111,7 +115,8 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
         LatLng theatreCoordinate = new LatLng(40.790665, 43.844927);
         map = googleMap;
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(theatreCoordinate, 16.5f));
-        map.addMarker(new MarkerOptions().position(theatreCoordinate));
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.map_marker);
+        map.addMarker(new MarkerOptions().position(theatreCoordinate).icon(marker));
     }
 
     @OnClick({R.id.fb, R.id.site, R.id.call, R.id.email})
@@ -195,7 +200,7 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
         String phnum = phoneNumber.getText().toString().trim();
         Intent i = new Intent(Intent.ACTION_DIAL);
         i.setData(Uri.parse("tel:" + phnum));
-        startActivity(Intent.createChooser(i, "Zangel"));
+        startActivity(Intent.createChooser(i, "Զանգահարել"));
     }
 
 
@@ -204,7 +209,7 @@ public class ContactUsFragment extends Fragment implements OnMapReadyCallback {
         i.setType("plain/text");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAdress.getText().toString()});
         try {
-            startActivity(Intent.createChooser(i, "Ուղղարկել նամակ..."));
+            startActivity(Intent.createChooser(i, "Ուղղարկել նամակ"));
         } catch (android.content.ActivityNotFoundException ex) {
 
         }

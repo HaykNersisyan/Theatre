@@ -31,8 +31,8 @@
     <string name="remove">Ջնջել</string>
     <string name="ticket_reserved">Պատվերված է</string>
     <string name="ticket_sold">Վաճառված է</string>
-    <string name="ticket_selected">Ընտրված է</string>
-    <string name="ticket_avalable">Առկա է</string>
+    <string name="ticket_selected">Առկա է</string>
+    <string name="ticket_avalable">Ընտրված է</string>
     <string name="buy">Գնել</string>
     <string name="log_out">Դուրս գալ</string>
     <string name="gnel">Գնել</string>

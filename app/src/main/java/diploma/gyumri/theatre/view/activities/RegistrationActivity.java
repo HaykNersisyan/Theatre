@@ -51,18 +51,23 @@ public class RegistrationActivity extends AppCompatActivity {
         email.addTextChangedListener(tw);
 
     }
+
     private TextWatcher tw = new TextWatcher() {
-        public void afterTextChanged(Editable s){
+        public void afterTextChanged(Editable s) {
 
         }
-        public void  beforeTextChanged(CharSequence s, int start, int count, int after){
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             // you can check for enter key here
         }
-        public void  onTextChanged (CharSequence s, int start, int before,int count) {
-            if (validateEmail(s)){
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (validateEmail(s)) {
                 email.setError(null);
-            }else {
-                email.setError("sxal email");
+            } else if (s.equals("") ) {
+                email.setError(null);
+            } else {
+                email.setError("Էլ․ հասցեն սխալ է");
             }
         }
     };
@@ -93,24 +98,22 @@ public class RegistrationActivity extends AppCompatActivity {
     void onClick() {
         if (fieldsValidation()) {
             if (!validePhone(phone.toString().trim())) {
-                Toast.makeText(this, "asdasdasd", Toast.LENGTH_SHORT).show();
+                phone.setError("Մուտքգրեք ճիշտ հեռախոսահամար");
             }
             if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
-                password.setTextColor(Color.RED);
-                confirmPassword.setHighlightColor(Color.RED);
-                Toast.makeText(this, "parolner@ havasar chen", Toast.LENGTH_SHORT).show();
+                password.setError("Գաղտնաբառերը չեն համընկնում");
+                confirmPassword.setError("Գաղտնաբառերը չեն համընկնում");
             }
             if (!validateEmail(email.getText().toString().trim())) {
-                Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
+                email.setError("Էլ․ հասցեն սխալ է");
             }
             if (!validePassword(password.getText().toString())) {
-                Toast.makeText(this, "Tamame che", Toast.LENGTH_SHORT).show();
+                password.setError("Գաղտնաբառը պետք է լինի 8 - 12 նիշ և պարտադիր պարունակի թվեր և սիմվոլներ");
             } else {
                 Request.register(this, userCreate());
             }
-
         } else {
-            Toast.makeText(this, "lracreq bolor dashter@", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Լրացրեք բոլոր դաշտերը", Toast.LENGTH_SHORT).show();
 
         }
     }
