@@ -25,7 +25,7 @@ public class TicketsMapper {
         return ticketner;
     }
 
-    private static Ticket initTicket(TicketDTO ticketDTO) {
+    public static Ticket initTicket(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
         ticket.setId(ticketDTO.getId());
         ticket.setPrice(ticketDTO.getPrice());

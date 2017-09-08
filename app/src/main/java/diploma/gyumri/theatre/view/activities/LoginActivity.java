@@ -1,27 +1,23 @@
 package diploma.gyumri.theatre.view.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Button;
 import android.widget.EditText;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.data.dto.UserDTO;
-import diploma.gyumri.theatre.data.dto.UserResponseDTO;
-import diploma.gyumri.theatre.model.User;
 import diploma.gyumri.theatre.request.Request;
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,6 +49,23 @@ public class LoginActivity extends AppCompatActivity {
 
 //            }
 //        }
+    }
+
+
+    @OnTouch(R.id.signInBtn)
+    boolean onTouch(Button button, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
+                return false;
+            case MotionEvent.ACTION_UP:
+                ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                return false;
+        }
+        return false;
     }
 
     public void login(String token) {

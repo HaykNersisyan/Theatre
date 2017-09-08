@@ -1,15 +1,12 @@
 package diploma.gyumri.theatre.view.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -114,7 +111,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, "Լրացրեք բոլոր դաշտերը", Toast.LENGTH_SHORT).show();
-
         }
     }
 

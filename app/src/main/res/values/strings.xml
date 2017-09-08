@@ -29,7 +29,7 @@
     <string name="seat">Տեղ</string>
     <string name="price">Գին</string>
     <string name="remove">Ջնջել</string>
-    <string name="ticket_reserved">Պատվերված է</string>
+    <string name="ticket_reserved">Պատվիրված է</string>
     <string name="ticket_sold">Վաճառված է</string>
     <string name="ticket_selected">Առկա է</string>
     <string name="ticket_avalable">Ընտրված է</string>

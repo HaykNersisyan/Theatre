@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Event;
-import diploma.gyumri.theatre.model.JsonParser;
 import diploma.gyumri.theatre.request.Request;
 import diploma.gyumri.theatre.view.activities.MainActivity;
 import diploma.gyumri.theatre.view.adapters.CustomAdapter;
@@ -41,9 +40,9 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-        List<Event> events = JsonParser.getEventList(getActivity());
-        listInit(events);
-//        Request.requestEvents((MainActivity) getActivity(),this);
+//        List<Event> events = JsonParser.getEventList(getActivity());
+//        listInit(events);
+        Request.requestEvents((MainActivity) getActivity(),this);
     }
 
     public void listInit(List<Event> events) {

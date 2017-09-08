@@ -11,8 +11,6 @@ import io.realm.RealmResults;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final long SPLASH_DISPLAY_LENGTH = 1000;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

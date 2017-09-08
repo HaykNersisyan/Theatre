@@ -12,18 +12,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
@@ -65,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         logOut = navigationView.getMenu().findItem(R.id.log_out);
+
         regBtn = (Button) ((NavigationView) findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.mainRegBtn);
         getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.newInstance(getSupportFragmentManager()), "MainFragment").commit();
         regBtn.setOnClickListener(this);
@@ -80,12 +75,10 @@ public class MainActivity extends AppCompatActivity
                         return false;
                     case MotionEvent.ACTION_CANCEL:
                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
-                        Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
                         return false;
                     case MotionEvent.ACTION_UP:
                         ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
-                        Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
                         ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
                         return false;
                 }
@@ -98,6 +91,27 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+        loginButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
+                        ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
+                        return false;
+                    case MotionEvent.ACTION_CANCEL:
+                        ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                        ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                        return false;
+                    case MotionEvent.ACTION_UP:
+                        ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                        ((Button) v).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                        return false;
+                }
+                return false;
             }
         });
     }

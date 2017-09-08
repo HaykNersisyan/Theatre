@@ -12,12 +12,9 @@ public class TicketDTO {
 
     @SerializedName("state")
     private  String state;
-
-
-
-    @SerializedName("seat_group")
+    @SerializedName("row")
     private int row;
-    @SerializedName("grp")
+    @SerializedName("seat")
     private int seat;
     @SerializedName("ticket_id")
     private int id;

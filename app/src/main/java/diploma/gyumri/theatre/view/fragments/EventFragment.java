@@ -21,10 +21,6 @@ import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.squareup.picasso.Picasso;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,7 +75,7 @@ public class EventFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
         unbinder = ButterKnife.bind(this, rootView);
-        eventDate.setText(getEventDate());
+        eventDate.setText(mEvent.getDate());
 
         playerContainer.setVisibility(View.VISIBLE);
         youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
@@ -118,57 +114,6 @@ public class EventFragment extends Fragment {
         return rootView;
     }
 
-    private String getEventDate() {
-        StringBuilder stringBuilder = new StringBuilder();
-        Date date = new Date(System.currentTimeMillis());
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        switch (calendar.get(Calendar.MONTH)) {
-            case Calendar.JANUARY:
-                stringBuilder.append("Հունվար - ի ");
-                break;
-            case Calendar.FEBRUARY:
-                stringBuilder.append("Փետրվար - ի ");
-                break;
-            case Calendar.MARCH:
-                stringBuilder.append("Մարտ - ի ");
-                break;
-            case Calendar.APRIL:
-                stringBuilder.append("Ապրիլ - ի ");
-                break;
-            case Calendar.MAY:
-                stringBuilder.append("Մայիս - ի ");
-                break;
-            case Calendar.JUNE:
-                stringBuilder.append("Հունիս - ի ");
-                break;
-            case Calendar.JULY:
-                stringBuilder.append("Հուլիս - ի ");
-                break;
-            case Calendar.AUGUST:
-                stringBuilder.append("Օգոստոս - ի ");
-                break;
-            case Calendar.SEPTEMBER:
-                stringBuilder.append("Սեպտեմբեր - ի ");
-                break;
-            case Calendar.OCTOBER:
-                stringBuilder.append("Հոկտեմբեր - ի ");
-                break;
-            case Calendar.NOVEMBER:
-                stringBuilder.append("Նոյեմբեր - ի ");
-                break;
-            case Calendar.DECEMBER:
-                stringBuilder.append("Դեկտեմբեր - ի ");
-                break;
-        }
-        stringBuilder.append(calendar.get(Calendar.DAY_OF_MONTH));
-        stringBuilder.append(" ին Ժամը։ ");
-        stringBuilder.append(calendar.get(Calendar.HOUR_OF_DAY));
-        stringBuilder.append(":");
-        stringBuilder.append(calendar.get(Calendar.MINUTE));
-        stringBuilder.append(" ին");
-        return stringBuilder.toString();
-    }
 
     @OnClick({R.id.eventTitle, R.id.buyTicket})
     void expandableBtnOnClick(View view) {
