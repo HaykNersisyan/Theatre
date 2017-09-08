@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,9 +22,13 @@ import diploma.gyumri.theatre.model.Event;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
     private ImageView image;
+    private TextView eventTitle;
+    private TextView eventDate;
 
     public MyViewHolder(View itemView) {
         super(itemView);
+        eventDate = (TextView) itemView.findViewById(R.id.date_event);
+        eventTitle = (TextView) itemView.findViewById(R.id.title_event);
         image = (ImageView) itemView.findViewById(R.id.imgEvent);
     }
 
@@ -35,8 +40,8 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         ((Activity)context).getWindowManager().getDefaultDisplay().getSize(size);
 
         int h = (size.x * 62) / 100;
-
-        Log.i("TAG", "initData: " + h);
+        eventTitle.setText(event.getName());
+        eventDate.setText(event.getDate());
         Picasso.with(context).load(event.getImgUrl()).resize(image.getWidth(), h).into(image);
     }
 

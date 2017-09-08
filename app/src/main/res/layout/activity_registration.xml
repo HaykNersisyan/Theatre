@@ -9,6 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
+    android:background="@drawable/background"
     tools:context="diploma.gyumri.theatre.view.activities.RegistrationActivity">
 
     <ScrollView
@@ -24,6 +25,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login" />
@@ -35,6 +37,7 @@
                 android:maxLines="1"/>
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/password" />
@@ -47,6 +50,7 @@
                 android:maxLines="1"/>
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/confirmPassword" />
@@ -59,6 +63,7 @@
                 android:maxLines="1"/>
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name" />
@@ -70,6 +75,7 @@
                 android:maxLines="1"/>
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/surname" />
@@ -81,6 +87,7 @@
                 android:maxLines="1"/>
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone" />
@@ -90,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:textColor="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+374"/>
@@ -102,6 +110,7 @@
             </LinearLayout>
 
             <TextView
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/email" />

@@ -31,6 +31,7 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
+import diploma.gyumri.theatre.constants.Constants;
 import diploma.gyumri.theatre.data.dto.TicketsDTO;
 import diploma.gyumri.theatre.data.mappers.TicketsMapper;
 import diploma.gyumri.theatre.model.Event;
@@ -84,9 +85,6 @@ public class ToBuyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        headers.forceNew = true;
-        headers.query = "token=" + "asdasghdsadkasdkk546asd";
-
     }
 
     @Override
@@ -95,10 +93,21 @@ public class ToBuyFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_to_buy, container, false);
         unbinder = ButterKnife.bind(this, view);
-        try {
-            mSocket = IO.socket("https://theater-cs50artashes.cs50.io");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        if (Constants.USER != null) {
+            headers.forceNew = true;
+            headers.query = "token:" + Constants.USER.getToken();
+            try {
+                mSocket = IO.socket("https://theater-cs50artashes.cs50.io", headers);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                mSocket = IO.socket("https://theater-cs50artashes.cs50.io");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
         mSocket.connect();
         mSocket.emit("tickets", 21);
@@ -117,6 +126,7 @@ public class ToBuyFragment extends Fragment {
                 });
             }
         });
+
         ticketList = new ArrayList<>();
         eventTitle.setText(event.getName());
         int i = getActivity().getWindowManager().getDefaultDisplay().getWidth();

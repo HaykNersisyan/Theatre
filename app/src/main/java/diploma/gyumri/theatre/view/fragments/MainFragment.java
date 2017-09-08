@@ -19,6 +19,8 @@ import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.model.Event;
 import diploma.gyumri.theatre.model.JsonParser;
+import diploma.gyumri.theatre.request.Request;
+import diploma.gyumri.theatre.view.activities.MainActivity;
 import diploma.gyumri.theatre.view.adapters.CustomAdapter;
 
 /**

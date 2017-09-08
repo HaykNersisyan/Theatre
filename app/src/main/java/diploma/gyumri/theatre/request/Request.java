@@ -1,6 +1,7 @@
 package diploma.gyumri.theatre.request;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -52,9 +53,13 @@ public class Request {
         call.enqueue(new Callback<UserDTO>() {
             @Override
             public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
-                User user = UserMapper.toUser(response.body());
-                saveUser(user);
-                activity.aaa();
+                if (response.code() != 400) {
+                    User user = UserMapper.toUser(response.body());
+                    saveUser(user);
+                    activity.aaa();
+                }else{
+                    Toast.makeText(activity, "Մուտքանունը կամ գաղտնաբառը սխալ է", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -65,8 +70,8 @@ public class Request {
         });
     }
 
-    public static void register(RegistrationActivity activity,User user){
-        Call<User> call = ((MyApplication)activity.getApplication()).getApiService().register(user);
+    public static void register(RegistrationActivity activity, User user) {
+        Call<User> call = ((MyApplication) activity.getApplication()).getApiService().register(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -79,7 +84,6 @@ public class Request {
             }
         });
     }
-
 
 
     private static void saveUser(final User user) {
