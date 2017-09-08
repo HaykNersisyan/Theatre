@@ -20,7 +20,7 @@ public class EventDTO {
     @SerializedName("stage")
     private String stage;
     @SerializedName("date")
-    private String date;
+    private long date;
     @SerializedName("imageurl")
     private String imgUrl;
     @SerializedName("videourl")

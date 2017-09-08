@@ -3,6 +3,7 @@ package diploma.gyumri.theatre.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -32,6 +34,7 @@ import butterknife.OnTouch;
 import butterknife.Unbinder;
 import diploma.gyumri.theatre.R;
 import diploma.gyumri.theatre.constants.Constants;
+import diploma.gyumri.theatre.data.dto.TicketDTO;
 import diploma.gyumri.theatre.data.dto.TicketsDTO;
 import diploma.gyumri.theatre.data.mappers.TicketsMapper;
 import diploma.gyumri.theatre.model.Event;
@@ -95,7 +98,7 @@ public class ToBuyFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         if (Constants.USER != null) {
             headers.forceNew = true;
-            headers.query = "token:" + Constants.USER.getToken();
+            headers.query = "token=" + Constants.USER.getToken();
             try {
                 mSocket = IO.socket("https://theater-cs50artashes.cs50.io", headers);
             } catch (URISyntaxException e) {
@@ -110,7 +113,7 @@ public class ToBuyFragment extends Fragment {
             }
         }
         mSocket.connect();
-        mSocket.emit("tickets", 21);
+        mSocket.emit("tickets", event.getId());
         mSocket.on("tickets", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -121,6 +124,33 @@ public class ToBuyFragment extends Fragment {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
+                        hallView.invalidate();
+                    }
+                });
+            }
+        });
+
+
+        mSocket.on("ticket", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Gson gson = new Gson();
+                Ticket ticket = TicketsMapper.initTicket(gson.fromJson(args[0].toString(), TicketDTO.class));
+                hallView.getTickets()[ticket.getRow() - 1].set(ticket.getSeat() - 1, ticket);
+                int tmp = -1;
+                for (int i = 0; i < ticketList.size(); i++) {
+                    if (ticketList.get(i).getId() == ticket.getId()) {
+                        tmp = i;
+                    }
+                }
+
+                final int finalTmp = tmp;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (finalTmp != -1) {
+                            removeFromList(finalTmp);
+                        }
                         hallView.invalidate();
                     }
                 });
@@ -209,22 +239,6 @@ public class ToBuyFragment extends Fragment {
     }
 
 
-//    private final class MyTouchListener implements View.OnTouchListener {
-//        public boolean onTouch(View view, MotionEvent motionEvent) {
-//            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                ClipData data = ClipData.newPlainText("", "");
-//                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-//                view.startDrag(data, shadowBuilder, view, 0);
-//                view.setVisibility(View.INVISIBLE);
-//                sX = motionEvent.getX();
-//                sY = motionEvent.getY();
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
-//    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -250,61 +264,91 @@ public class ToBuyFragment extends Fragment {
                 }
                 break;
             case R.id.buy:
+                if (Constants.USER == null) {
+                    Toast.makeText(getContext(), "Դուք մուտք եղած չեք", Toast.LENGTH_SHORT).show();
+                    break;
+                } else {
+                    for (int i = 0; i < ticketList.size(); i++) {
+                        mSocket.emit("buy", ticketList.get(i).getId());
+                    }
+                    break;
+                }
         }
 
     }
 
 
-    @OnTouch(R.id.hallView)
+    @OnTouch({R.id.hallView,R.id.buy})
     boolean onTouch(View v, MotionEvent event) {
 //        if (event.getAction() == MotionEvent.ACTION_BUTTON_PRESS) {
 //            scrollView.setNestedScrollingEnabled(false);
 //        }
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            sX = (int) event.getX();
-            sY = (int) event.getY();
+        switch (v.getId()) {
+            case R.id.hallView:
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                sX = (int) event.getX();
+                sY = (int) event.getY();
 
-            if (hallView.getTickets() == null) {
+                if (hallView.getTickets() == null) {
+                    return false;
+                }
+                Ticket ticket = hallView.select(event.getX(), event.getY());
+                if (ticket != null) {
+                    if (ticket.getState() == Ticket.State.AVAILABLE) {
+                        buyButton.setVisibility(View.VISIBLE);
+                        ticketsListDescription.setVisibility(View.VISIBLE);
+                        ticketList.add(ticket);
+                        recyclerViewDataChanged(ticket, Ticket.State.SELECTED);
+                    } else if (ticket.getState() == Ticket.State.SELECTED) {
+                        if (ticketList.indexOf(ticket) != -1) {
+                            removeFromList(ticketList.indexOf(ticket));
+                            recyclerViewDataChanged(ticket, Ticket.State.AVAILABLE);
+                        }
+                    }
+                    if (ticketList.size() != 0) {
+                        selectedTicketsDescription();
+                    }
+                    hallView.invalidate();
+                    Log.i("Tag", sY + "   " + sX);
+                    return true;
+                }
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (isZoomed) {
+
+
+                    Log.i("Tag", "Action Move ");
+                    mX = ((int) event.getX()) - sX;
+                    mY = ((int) event.getY()) - sY;
+
+
+                    hallView.setX(mX);
+                    hallView.setY(mY);
+                    Log.i("Tag", mX + " " + mY);
+
+                    hallView.invalidate();
+                }
                 return false;
             }
-            Ticket ticket = hallView.select(event.getX(), event.getY());
-            if (ticket != null) {
-                if (ticket.getState() == Ticket.State.AVAILABLE) {
-                    buyButton.setVisibility(View.VISIBLE);
-                    ticketsListDescription.setVisibility(View.VISIBLE);
-                    ticketList.add(ticket);
-                    recyclerViewDataChanged(ticket, Ticket.State.SELECTED);
-                } else if (ticket.getState() == Ticket.State.SELECTED) {
-                    if (ticketList.indexOf(ticket) != -1) {
-                        removeFromList(ticketList.indexOf(ticket));
-                        recyclerViewDataChanged(ticket, Ticket.State.AVAILABLE);
+            break;
+            case R.id.buy:
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.buttonColor, null));
+                            v.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed, null));
+                            return false;
+                        case MotionEvent.ACTION_CANCEL:
+                            ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
+                            ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                            v.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                            return false;
+                        case MotionEvent.ACTION_UP:
+                            ResourcesCompat.getDrawable(getResources(), R.drawable.button, null);
+                            ((Button) v).setTextColor(ResourcesCompat.getColor(getResources(), R.color.textColor, null));
+                            v.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button, null));
+                            return false;
                     }
-                }
-                if (ticketList.size() != 0) {
-                    selectedTicketsDescription();
-                }
-                hallView.invalidate();
-                Log.i("Tag", sY + "   " + sX);
-                return true;
+                    break;
             }
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (isZoomed) {
-
-
-                Log.i("Tag", "Action Move ");
-                mX = ((int) event.getX()) - sX;
-                mY = ((int) event.getY()) - sY;
-
-
-                hallView.setX(mX);
-                hallView.setY(mY);
-                Log.i("Tag", mX + " " + mY);
-
-                hallView.invalidate();
-            }
-
-
-        }
         return false;
     }
 

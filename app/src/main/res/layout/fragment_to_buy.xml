@@ -283,6 +283,7 @@
                 android:textAlignment="center" />
 
             <Button
+                android:layout_marginBottom="16dp"
                 android:id="@+id/buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

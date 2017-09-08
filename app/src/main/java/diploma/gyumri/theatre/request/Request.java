@@ -57,7 +57,7 @@ public class Request {
                     User user = UserMapper.toUser(response.body());
                     saveUser(user);
                     activity.aaa();
-                }else{
+                } else {
                     Toast.makeText(activity, "Մուտքանունը կամ գաղտնաբառը սխալ է", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -70,16 +70,22 @@ public class Request {
         });
     }
 
-    public static void register(RegistrationActivity activity, User user) {
+    public static void register(final RegistrationActivity activity, User user) {
         Call<User> call = ((MyApplication) activity.getApplication()).getApiService().register(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.i("TAGUHI", "onResponse: tamame" + response.code());
+                if (response.code() == 400) {
+                    Toast.makeText(activity, "Ստուգեք տվյալները", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, "Դուք հաջողությամբ գրանցվել եք", Toast.LENGTH_SHORT).show();
+                    activity.finish();
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(activity, "Ստուգեք ինտերնետը", Toast.LENGTH_SHORT).show();
 
             }
         });
