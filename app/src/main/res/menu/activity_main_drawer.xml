@@ -9,9 +9,9 @@
             android:icon="@drawable/events"
             android:title="@string/representation" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/tickets"
+            android:icon="@drawable/ticket_icon"
+            android:title="Գնումների պատմություն" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/scroll_icon"

@@ -1,6 +1,5 @@
 package diploma.gyumri.theatre.view.activities;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -25,7 +24,7 @@ import diploma.gyumri.theatre.model.User;
 import diploma.gyumri.theatre.view.fragments.AnnalsFragment;
 import diploma.gyumri.theatre.view.fragments.ContactUsFragment;
 import diploma.gyumri.theatre.view.fragments.MainFragment;
-import diploma.gyumri.theatre.view.service.MyService;
+import diploma.gyumri.theatre.view.fragments.UserTicketsFragment;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -207,17 +206,13 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-        } else if (id == R.id.nav_gallery) {
-            PendingIntent pendingIntent = createPendingResult(11, new Intent(), 0);
-            Intent intent = new Intent(MainActivity.this, MyService.class);
-//                intent = new Intent(ServiceDemoActivity.this, SecondService.class);
-
-            intent.putExtra("name", "Jane");
-            intent.putExtra("time", 4);
-            intent.putExtra("pending", pendingIntent);
+        } else if (id == R.id.tickets) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new UserTicketsFragment(), "annals").addToBackStack(null)
+                    .commit();
         } else if (id == R.id.nav_slideshow) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new AnnalsFragment(), "annals")
+                    .replace(R.id.container, new AnnalsFragment(), "annals").addToBackStack(null)
                     .commit();
         } else if (id == R.id.contact_us) {
             getSupportFragmentManager().beginTransaction()
