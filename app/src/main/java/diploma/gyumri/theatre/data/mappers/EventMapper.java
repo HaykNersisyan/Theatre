@@ -20,13 +20,13 @@ public class EventMapper {
         event.setPrice(eventDTO.getPrice());
         event.setStage(eventDTO.getStage());
 
-        event.setDate(getEventDate(eventDTO.getDate()));
+        event.setDate(getDate(eventDTO.getDate()));
         event.setImgUrl(eventDTO.getImgUrl());
         event.setVideoUrl(eventDTO.getVideoUrl());
         return event;
     }
 
-    private static String getEventDate(long time) {
+    public static String getDate(long time) {
         StringBuilder stringBuilder = new StringBuilder();
         Date date = new Date(time);
         GregorianCalendar calendar = new GregorianCalendar();
